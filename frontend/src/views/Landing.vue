@@ -138,13 +138,13 @@
         <div class="flex gap-5 animate-infinite-scroll hover:[animation-play-state:paused]" style="width: max-content">
           <template v-for="rep in 2" :key="rep">
             <div
-              v-for="n in 8"
-              :key="`${rep}-${n}`"
+              v-for="(photo, idx) in patientPhotos"
+              :key="`${rep}-${idx}`"
               class="shrink-0 w-64 h-80 rounded-2xl overflow-hidden shadow-lg group cursor-pointer"
             >
               <img
-                :src="`/images/patients/photo${n}.jpg`"
-                :alt="`Фото с пациентом ${n}`"
+                :src="`/images/patients/${photo}`"
+                :alt="`Фото с пациентом ${idx + 1}`"
                 class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
               />
             </div>
@@ -263,6 +263,17 @@ const authStore = useAuthStore()
 const products = ref([])
 const loading = ref(true)
 const showSuccess = ref(false)
+
+const patientPhotos = [
+  'photo_2026-04-21_23-34-03.jpg',
+  'photo_2026-04-21_23-34-31.jpg',
+  'photo_2026-04-21_23-34-39.jpg',
+  'photo_2026-04-21_23-34-44.jpg',
+  'photo_2026-04-21_23-34-52.jpg',
+  'photo_2026-04-21_23-34-57.jpg',
+  'photo_2026-04-21_23-35-02.jpg',
+  'photo_2026-04-21_23-35-10.jpg',
+]
 
 // Scroll reveal refs
 const productsHeader = ref(null)

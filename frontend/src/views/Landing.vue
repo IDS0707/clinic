@@ -15,26 +15,25 @@
           <div>
             <div class="flex items-center gap-3 mb-6 animate-fade-up text-brand-200 text-xs font-semibold tracking-widest uppercase" style="animation-delay: 0.1s; opacity: 0">
               <span class="w-8 h-px bg-brand-400"></span>
-              Профессиональная трихология
+              {{ t.hero_label }}
             </div>
 
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 animate-fade-up" style="animation-delay: 0.25s; opacity: 0">
-              Ваше здоровье —
-              <span class="text-brand-300">Наш приоритет</span>
+              {{ t.hero_title1 }}
+              <span class="text-brand-300">{{ t.hero_title2 }}</span>
             </h1>
 
             <p class="text-lg md:text-xl text-blue-100/80 leading-relaxed mb-10 max-w-xl animate-fade-up" style="animation-delay: 0.4s; opacity: 0">
-              Профессиональные препараты для лечения и восстановления волос.
-              Проверенные средства от ведущих специалистов.
+              {{ t.hero_desc }}
             </p>
 
             <div class="flex flex-col sm:flex-row gap-4 animate-fade-up" style="animation-delay: 0.55s; opacity: 0">
               <a href="#products" class="inline-flex items-center justify-center gap-2 bg-white text-brand-700 px-8 py-3.5 rounded-full font-semibold hover:bg-brand-50 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-white/20 active:translate-y-0 transition-all duration-300 shadow-lg group">
-                Каталог препаратов
+                {{ t.hero_catalog }}
                 <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
               </a>
               <a href="#doctor" class="inline-flex items-center justify-center gap-2 border border-white/30 text-white px-8 py-3.5 rounded-full font-medium hover:bg-white/10 hover:border-white/50 transition-all duration-300">
-                О специалисте
+                {{ t.hero_about }}
               </a>
             </div>
 
@@ -42,15 +41,15 @@
             <div class="grid grid-cols-3 gap-6 mt-14 pt-10 border-t border-white/20 animate-fade-up" style="animation-delay: 0.7s; opacity: 0">
               <div>
                 <div class="text-3xl md:text-4xl font-bold text-white">15<span class="text-brand-300">+</span></div>
-                <div class="text-sm text-blue-200 mt-1">Лет опыта</div>
+                <div class="text-sm text-blue-200 mt-1">{{ t.hero_years }}</div>
               </div>
               <div>
                 <div class="text-3xl md:text-4xl font-bold text-white">5000<span class="text-brand-300">+</span></div>
-                <div class="text-sm text-blue-200 mt-1">Пациентов</div>
+                <div class="text-sm text-blue-200 mt-1">{{ t.hero_patients }}</div>
               </div>
               <div>
                 <div class="text-3xl md:text-4xl font-bold text-white">98<span class="text-brand-300">%</span></div>
-                <div class="text-sm text-blue-200 mt-1">Эффективность</div>
+                <div class="text-sm text-blue-200 mt-1">{{ t.hero_effect }}</div>
               </div>
             </div>
           </div>
@@ -69,19 +68,7 @@
               <!-- Badge -->
               <div class="absolute -bottom-5 -right-5 bg-white rounded-2xl shadow-2xl p-4 border border-brand-100">
                 <div class="text-2xl font-bold text-brand-700">1500<span class="text-brand-500">+</span></div>
-                <div class="text-xs font-medium text-stone-500 mt-0.5">Довольных пациентов</div>
-              </div>
-              <!-- Second badge -->
-              <div class="absolute -top-4 -left-4 bg-white rounded-2xl shadow-xl p-3 border border-brand-100">
-                <div class="flex items-center gap-2">
-                  <div class="w-8 h-8 bg-brand-100 rounded-lg flex items-center justify-center">
-                    <svg class="w-4 h-4 text-brand-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
-                  </div>
-                  <div>
-                    <div class="text-xs font-bold text-stone-800">Сертифицирован</div>
-                    <div class="text-[10px] text-stone-400">Лицензированный врач</div>
-                  </div>
-                </div>
+                <div class="text-xs font-medium text-stone-500 mt-0.5">{{ t.hero_patients }}</div>
               </div>
             </div>
           </div>
@@ -120,11 +107,11 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-14">
         <div class="flex items-center justify-center gap-3 text-brand-600 text-xs font-semibold tracking-widest uppercase mb-4">
           <span class="w-8 h-px bg-brand-400"></span>
-          Наши пациенты
+          {{ t.patients_label }}
           <span class="w-8 h-px bg-brand-400"></span>
         </div>
-        <h2 class="text-3xl md:text-4xl font-bold text-stone-900 mb-4">Фото с пациентами</h2>
-        <p class="text-stone-500 text-lg max-w-xl mx-auto">Наши врачи и пациенты</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-stone-900 mb-4">{{ t.patients_title }}</h2>
+        <p class="text-stone-500 text-lg max-w-xl mx-auto">{{ t.patients_subtitle }}</p>
       </div>
 
       <!-- Carousel -->
@@ -159,18 +146,16 @@
         <div class="text-center mb-16 reveal" ref="productsHeader">
           <div class="section-label justify-center mb-4">
             <span class="w-8 h-px bg-brand-400"></span>
-            Каталог
+            {{ t.products_label }}
             <span class="w-8 h-px bg-brand-400"></span>
           </div>
-          <h2 class="heading-lg mb-4">Наши препараты</h2>
-          <p class="text-stone-500 text-lg max-w-2xl mx-auto leading-relaxed">
-            Эффективные средства для лечения и восстановления волос, подобранные нашими специалистами
-          </p>
+          <h2 class="heading-lg mb-4">{{ t.products_title }}</h2>
+          <p class="text-stone-500 text-lg max-w-2xl mx-auto leading-relaxed">{{ t.products_desc }}</p>
         </div>
 
         <div v-if="loading" class="text-center py-20">
           <div class="inline-block w-10 h-10 border-[3px] border-brand-200 border-t-brand-600 rounded-full animate-spin"></div>
-          <p class="mt-4 text-stone-400 font-medium">Загрузка...</p>
+          <p class="mt-4 text-stone-400 font-medium">{{ t.products_loading }}</p>
         </div>
 
         <div v-else-if="products.length === 0" class="text-center py-20">
@@ -179,7 +164,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
             </svg>
           </div>
-          <p class="text-stone-400 text-lg font-medium">Препараты скоро появятся</p>
+          <p class="text-stone-400 text-lg font-medium">{{ t.products_empty }}</p>
         </div>
 
         <div v-else class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 stagger-children">
@@ -204,20 +189,18 @@
       <div class="relative max-w-4xl mx-auto px-4 py-24 text-center">
         <div class="section-label !text-brand-200 justify-center mb-6">
           <span class="w-8 h-px bg-brand-400/50"></span>
-          Начните сегодня
+          {{ t.cta_label }}
           <span class="w-8 h-px bg-brand-400/50"></span>
         </div>
-        <h2 class="heading-lg !text-white mb-5 text-balance">Начните лечение уже сегодня</h2>
-        <p class="text-brand-200/70 text-lg mb-10 max-w-lg mx-auto leading-relaxed">
-          Зарегистрируйтесь и получите доступ к полному каталогу препаратов от специалистов
-        </p>
+        <h2 class="heading-lg !text-white mb-5 text-balance">{{ t.cta_title }}</h2>
+        <p class="text-brand-200/70 text-lg mb-10 max-w-lg mx-auto leading-relaxed">{{ t.cta_desc }}</p>
         <router-link
           v-if="!authStore.isLoggedIn"
           to="/register"
           class="inline-block bg-white text-brand-800 px-8 py-4 rounded-full font-semibold hover:bg-brand-50 hover:shadow-2xl hover:shadow-white/10 hover:-translate-y-1 active:scale-[0.97] active:translate-y-0 transition-all duration-300 shadow-lg group"
         >
           <span class="inline-flex items-center gap-2">
-            Зарегистрироваться
+            {{ t.cta_register }}
             <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
           </span>
         </router-link>
@@ -257,9 +240,12 @@ import CartDrawer from '../components/CartDrawer.vue'
 import Footer from '../components/Footer.vue'
 import { useCartStore } from '../stores/cart'
 import { useAuthStore, api } from '../stores/auth'
+import { useLangStore } from '../stores/lang'
 
 const cartStore = useCartStore()
 const authStore = useAuthStore()
+const langStore = useLangStore()
+const t = computed(() => langStore.t)
 const products = ref([])
 const loading = ref(true)
 const showSuccess = ref(false)

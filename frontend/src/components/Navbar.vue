@@ -19,25 +19,38 @@
         <!-- Center nav -->
         <div class="hidden md:flex items-center gap-1">
           <a href="#doctor" class="relative text-sm font-medium text-stone-500 hover:text-brand-700 px-4 py-2 rounded-xl hover:bg-brand-50/60 transition-all duration-300 group">
-            О специалисте
+            {{ t.nav_specialist }}
             <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-brand-500 rounded-full group-hover:w-5 transition-all duration-300"></span>
           </a>
           <a href="#patients" class="relative text-sm font-medium text-stone-500 hover:text-brand-700 px-4 py-2 rounded-xl hover:bg-brand-50/60 transition-all duration-300 group">
-            Пациенты
+            {{ t.nav_patients }}
             <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-brand-500 rounded-full group-hover:w-5 transition-all duration-300"></span>
           </a>
           <a href="#products" class="relative text-sm font-medium text-stone-500 hover:text-brand-700 px-4 py-2 rounded-xl hover:bg-brand-50/60 transition-all duration-300 group">
-            Препараты
+            {{ t.nav_products }}
             <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-brand-500 rounded-full group-hover:w-5 transition-all duration-300"></span>
           </a>
           <a href="#contacts" class="relative text-sm font-medium text-stone-500 hover:text-brand-700 px-4 py-2 rounded-xl hover:bg-brand-50/60 transition-all duration-300 group">
-            Контакты
+            {{ t.nav_contacts }}
             <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-brand-500 rounded-full group-hover:w-5 transition-all duration-300"></span>
           </a>
         </div>
 
         <!-- Right side -->
         <div class="flex items-center gap-2">
+          <!-- Language switcher -->
+          <div class="flex items-center bg-stone-100 rounded-xl p-1 gap-0.5">
+            <button
+              @click="langStore.setLang('ru')"
+              class="text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-200"
+              :class="langStore.current === 'ru' ? 'bg-brand-600 text-white shadow-sm' : 'text-stone-500 hover:text-stone-700'"
+            >RU</button>
+            <button
+              @click="langStore.setLang('uz')"
+              class="text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-200"
+              :class="langStore.current === 'uz' ? 'bg-brand-600 text-white shadow-sm' : 'text-stone-500 hover:text-stone-700'"
+            >UZ</button>
+          </div>
           <!-- Cart -->
           <button @click="cartStore.toggle()"
                   class="relative p-2.5 rounded-xl text-stone-500 hover:text-brand-700 hover:bg-brand-50/60 transition-all duration-300 group">
@@ -62,17 +75,17 @@
             </div>
             <button @click="authStore.logout()"
                     class="text-xs font-medium text-stone-400 hover:text-red-500 transition-colors duration-300">
-              Выйти
+              {{ t.nav_logout }}
             </button>
           </template>
           <template v-else>
             <router-link to="/login"
                          class="hidden sm:block text-sm font-medium px-4 py-2 rounded-xl text-stone-600 hover:text-brand-700 hover:bg-brand-50/60 transition-all duration-300">
-              Войти
+              {{ t.nav_login }}
             </router-link>
             <router-link to="/register"
                          class="text-sm font-semibold px-5 py-2.5 rounded-xl bg-brand-700 text-white hover:bg-brand-800 hover:shadow-lg hover:shadow-brand-700/20 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 shadow-sm shadow-brand-700/20">
-              Регистрация
+              {{ t.nav_register }}
             </router-link>
           </template>
         </div>
@@ -82,12 +95,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useCartStore } from '../stores/cart'
+import { useLangStore } from '../stores/lang'
 
 const authStore = useAuthStore()
 const cartStore = useCartStore()
+const langStore = useLangStore()
+const t = computed(() => langStore.t)
 const scrolled = ref(false)
 
 function handleScroll() {

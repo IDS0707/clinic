@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: clinic
       POSTGRES_PASSWORD: clinic_secret_2024
     ports:
-      - "5434:5432"
+      - "5435:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:

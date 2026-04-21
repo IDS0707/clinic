@@ -4,64 +4,86 @@
     <CartDrawer @checkout="placeOrder" />
 
     <!-- Hero -->
-    <section class="relative min-h-[100vh] flex items-center bg-gradient-to-b from-surface-warm via-surface to-white overflow-hidden">
+    <section class="relative min-h-screen flex items-center bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900 overflow-hidden">
       <!-- Animated decorative blobs -->
-      <div class="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-to-bl from-brand-200/25 via-brand-100/15 to-transparent rounded-full -translate-y-1/4 translate-x-1/4 animate-pulse-soft"></div>
-      <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-brand-100/20 via-amber-50/15 to-transparent rounded-full translate-y-1/4 -translate-x-1/4 animate-pulse-soft" style="animation-delay: 1.5s"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-brand-50/30 rounded-full blur-3xl animate-float"></div>
+      <div class="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-500/20 rounded-full -translate-y-1/4 translate-x-1/4 animate-pulse-soft"></div>
+      <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-600/20 rounded-full translate-y-1/4 -translate-x-1/4 animate-pulse-soft" style="animation-delay: 1.5s"></div>
 
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 md:pt-40 md:pb-32 w-full">
-        <div class="max-w-3xl">
-          <div class="section-label mb-6 animate-fade-up" style="animation-delay: 0.1s; opacity: 0">
-            <span class="w-8 h-px bg-brand-400"></span>
-            Профессиональная трихология
-          </div>
+        <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <!-- LEFT: Text -->
+          <div>
+            <div class="flex items-center gap-3 mb-6 animate-fade-up text-brand-200 text-xs font-semibold tracking-widest uppercase" style="animation-delay: 0.1s; opacity: 0">
+              <span class="w-8 h-px bg-brand-400"></span>
+              Профессиональная трихология
+            </div>
 
-          <h1 class="heading-xl mb-6 animate-fade-up text-balance" style="animation-delay: 0.25s; opacity: 0">
-            Здоровые волосы — это
-            <span class="relative text-brand-600">
-              реальность
-              <svg class="absolute -bottom-2 left-0 w-full h-3 text-brand-300/50" viewBox="0 0 200 12" preserveAspectRatio="none">
-                <path d="M0,8 Q50,0 100,6 T200,4" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
-              </svg>
-            </span>
-          </h1>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 animate-fade-up" style="animation-delay: 0.25s; opacity: 0">
+              Ваше здоровье —
+              <span class="text-brand-300">Наш приоритет</span>
+            </h1>
 
-          <p class="text-lg md:text-xl text-stone-500 leading-relaxed mb-10 max-w-xl animate-fade-up" style="animation-delay: 0.4s; opacity: 0">
-            Профессиональные препараты для лечения и восстановления волос.
-            Проверенные средства от ведущих специалистов.
-          </p>
+            <p class="text-lg md:text-xl text-blue-100/80 leading-relaxed mb-10 max-w-xl animate-fade-up" style="animation-delay: 0.4s; opacity: 0">
+              Профессиональные препараты для лечения и восстановления волос.
+              Проверенные средства от ведущих специалистов.
+            </p>
 
-          <div class="flex flex-col sm:flex-row gap-4 animate-fade-up" style="animation-delay: 0.55s; opacity: 0">
-            <a href="#products" class="btn-primary text-center group">
-              <span class="inline-flex items-center gap-2">
+            <div class="flex flex-col sm:flex-row gap-4 animate-fade-up" style="animation-delay: 0.55s; opacity: 0">
+              <a href="#products" class="inline-flex items-center justify-center gap-2 bg-white text-brand-700 px-8 py-3.5 rounded-full font-semibold hover:bg-brand-50 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-white/20 active:translate-y-0 transition-all duration-300 shadow-lg group">
                 Каталог препаратов
                 <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-              </span>
-            </a>
-            <a href="#doctor" class="btn-outline text-center">
-              О специалисте
-            </a>
-          </div>
-        </div>
+              </a>
+              <a href="#doctor" class="inline-flex items-center justify-center gap-2 border border-white/30 text-white px-8 py-3.5 rounded-full font-medium hover:bg-white/10 hover:border-white/50 transition-all duration-300">
+                О специалисте
+              </a>
+            </div>
 
-        <!-- Stats row -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 md:mt-28 pt-10 border-t border-stone-200/60 animate-fade-up" style="animation-delay: 0.7s; opacity: 0">
-          <div class="group cursor-default">
-            <div class="text-3xl md:text-4xl font-serif text-stone-900 group-hover:text-brand-700 transition-colors duration-300">10<span class="text-brand-500">+</span></div>
-            <div class="text-sm text-stone-400 mt-1 font-medium">Лет опыта</div>
+            <!-- Stats row -->
+            <div class="grid grid-cols-3 gap-6 mt-14 pt-10 border-t border-white/20 animate-fade-up" style="animation-delay: 0.7s; opacity: 0">
+              <div>
+                <div class="text-3xl md:text-4xl font-bold text-white">15<span class="text-brand-300">+</span></div>
+                <div class="text-sm text-blue-200 mt-1">Лет опыта</div>
+              </div>
+              <div>
+                <div class="text-3xl md:text-4xl font-bold text-white">5000<span class="text-brand-300">+</span></div>
+                <div class="text-sm text-blue-200 mt-1">Пациентов</div>
+              </div>
+              <div>
+                <div class="text-3xl md:text-4xl font-bold text-white">98<span class="text-brand-300">%</span></div>
+                <div class="text-sm text-blue-200 mt-1">Эффективность</div>
+              </div>
+            </div>
           </div>
-          <div class="group cursor-default">
-            <div class="text-3xl md:text-4xl font-serif text-stone-900 group-hover:text-brand-700 transition-colors duration-300">5000<span class="text-brand-500">+</span></div>
-            <div class="text-sm text-stone-400 mt-1 font-medium">Довольных пациентов</div>
-          </div>
-          <div class="group cursor-default">
-            <div class="text-3xl md:text-4xl font-serif text-stone-900 group-hover:text-brand-700 transition-colors duration-300">30<span class="text-brand-500">+</span></div>
-            <div class="text-sm text-stone-400 mt-1 font-medium">Видов препаратов</div>
-          </div>
-          <div class="group cursor-default">
-            <div class="text-3xl md:text-4xl font-serif text-stone-900 group-hover:text-brand-700 transition-colors duration-300">98<span class="text-brand-500">%</span></div>
-            <div class="text-sm text-stone-400 mt-1 font-medium">Эффективность</div>
+
+          <!-- RIGHT: Doctor image -->
+          <div class="relative hidden md:flex justify-center animate-fade-up" style="animation-delay: 0.35s; opacity: 0">
+            <div class="relative w-full max-w-md">
+              <!-- Decorative ring -->
+              <div class="absolute -inset-4 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20"></div>
+              <img
+                src="/images/doctor.png"
+                alt="Специалист клиники"
+                class="relative rounded-2xl w-full object-cover object-top shadow-2xl shadow-brand-900/40"
+                style="max-height: 500px;"
+              />
+              <!-- Badge -->
+              <div class="absolute -bottom-5 -right-5 bg-white rounded-2xl shadow-2xl p-4 border border-brand-100">
+                <div class="text-2xl font-bold text-brand-700">1500<span class="text-brand-500">+</span></div>
+                <div class="text-xs font-medium text-stone-500 mt-0.5">Довольных пациентов</div>
+              </div>
+              <!-- Second badge -->
+              <div class="absolute -top-4 -left-4 bg-white rounded-2xl shadow-xl p-3 border border-brand-100">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 bg-brand-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-4 h-4 text-brand-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-stone-800">Сертифицирован</div>
+                    <div class="text-[10px] text-stone-400">Лицензированный врач</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -92,6 +114,44 @@
     </section>
 
     <DoctorSection />
+
+    <!-- Patients Photos Carousel -->
+    <section id="patients" class="py-24 bg-gray-50 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-14">
+        <div class="flex items-center justify-center gap-3 text-brand-600 text-xs font-semibold tracking-widest uppercase mb-4">
+          <span class="w-8 h-px bg-brand-400"></span>
+          Наши пациенты
+          <span class="w-8 h-px bg-brand-400"></span>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-bold text-stone-900 mb-4">Фото с пациентами</h2>
+        <p class="text-stone-500 text-lg max-w-xl mx-auto">Наши врачи и пациенты</p>
+      </div>
+
+      <!-- Carousel -->
+      <div class="relative overflow-hidden">
+        <!-- Left gradient fade -->
+        <div class="absolute left-0 top-0 bottom-0 w-28 lg:w-48 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none"></div>
+        <!-- Right gradient fade -->
+        <div class="absolute right-0 top-0 bottom-0 w-28 lg:w-48 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none"></div>
+
+        <!-- Scrolling track — photos duplicated for seamless infinite loop -->
+        <div class="flex gap-5 animate-infinite-scroll hover:[animation-play-state:paused]" style="width: max-content">
+          <template v-for="rep in 2" :key="rep">
+            <div
+              v-for="n in 8"
+              :key="`${rep}-${n}`"
+              class="shrink-0 w-64 h-80 rounded-2xl overflow-hidden shadow-lg group cursor-pointer"
+            >
+              <img
+                :src="`/images/patients/photo${n}.jpg`"
+                :alt="`Фото с пациентом ${n}`"
+                class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
+              />
+            </div>
+          </template>
+        </div>
+      </div>
+    </section>
 
     <!-- Products -->
     <section id="products" class="py-24 bg-gradient-to-b from-white via-surface-warm to-surface relative">

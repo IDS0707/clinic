@@ -236,7 +236,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import axios from 'axios'
 import Navbar from '../components/Navbar.vue'
 import DoctorSection from '../components/DoctorSection.vue'

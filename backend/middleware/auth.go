@@ -91,3 +91,25 @@ func AdminAuth() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+func WorkerAuth() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		claims, err := extractToken(c)
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Необходима авторизация"})
+			c.Abort()
+			return
+		}
+
+		role, _ := claims["role"].(string)
+		if role != "worker" {
+			c.JSON(http.StatusForbidden, gin.H{"error": "Требуется доступ работника"})
+			c.Abort()
+			return
+		}
+
+		id, _ := claims["id"].(float64)
+		c.Set("workerID", uint(id))
+		c.Next()
+	}
+}

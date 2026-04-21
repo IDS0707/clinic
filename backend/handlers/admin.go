@@ -28,29 +28,47 @@ func AdminLogin(c *gin.Context) {
 		return
 	}
 
+	// Check admin first
 	var admin models.Admin
-	if err := database.DB.Where("phone = ?", input.Phone).First(&admin).Error; err != nil {
+	if err := database.DB.Where("phone = ?", input.Phone).First(&admin).Error; err == nil {
+		if err := bcrypt.CompareHashAndPassword([]byte(admin.Password), []byte(input.Password)); err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Неверные учетные данные"})
+			return
+		}
+		token, err := middleware.GenerateToken(admin.ID, "admin")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка сервера"})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"token": token,
+			"role":  "admin",
+			"admin": gin.H{"id": admin.ID, "phone": admin.Phone},
+		})
+		return
+	}
+
+	// Check worker
+	var worker models.Worker
+	if err := database.DB.Where("phone = ?", input.Phone).First(&worker).Error; err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Неверные учетные данные"})
 		return
 	}
 
-	if err := bcrypt.CompareHashAndPassword([]byte(admin.Password), []byte(input.Password)); err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(worker.Password), []byte(input.Password)); err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Неверные учетные данные"})
 		return
 	}
 
-	token, err := middleware.GenerateToken(admin.ID, "admin")
+	token, err := middleware.GenerateToken(worker.ID, "worker")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка сервера"})
 		return
 	}
-
 	c.JSON(http.StatusOK, gin.H{
-		"token": token,
-		"admin": gin.H{
-			"id":    admin.ID,
-			"phone": admin.Phone,
-		},
+		"token":  token,
+		"role":   "worker",
+		"worker": gin.H{"id": worker.ID, "phone": worker.Phone, "name": worker.Name},
 	})
 }
 
@@ -115,4 +133,68 @@ func UpdateAdminSettings(c *gin.Context) {
 			"phone": admin.Phone,
 		},
 	})
+}
+
+// ==================== Worker Management ====================
+
+type CreateWorkerInput struct {
+	Name     string `json:"name" binding:"required"`
+	Phone    string `json:"phone" binding:"required"`
+	Password string `json:"password" binding:"required,min=6"`
+}
+
+func GetWorkers(c *gin.Context) {
+	var workers []models.Worker
+	database.DB.Find(&workers)
+	result := make([]gin.H, len(workers))
+	for i, w := range workers {
+		result[i] = gin.H{"id": w.ID, "name": w.Name, "phone": w.Phone}
+	}
+	c.JSON(http.StatusOK, result)
+}
+
+func CreateWorker(c *gin.Context) {
+	var input CreateWorkerInput
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Имя, телефон и пароль обязательны (мин. 6 символов)"})
+		return
+	}
+
+	if !phoneRegex.MatchString(input.Phone) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Неверный формат номера телефона (998XXXXXXXXX)"})
+		return
+	}
+
+	var existing models.Worker
+	if err := database.DB.Where("phone = ?", input.Phone).First(&existing).Error; err == nil {
+		c.JSON(http.StatusConflict, gin.H{"error": "Этот номер уже используется"})
+		return
+	}
+
+	hash, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка сервера"})
+		return
+	}
+
+	worker := models.Worker{
+		Name:     input.Name,
+		Phone:    input.Phone,
+		Password: string(hash),
+	}
+	if err := database.DB.Create(&worker).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка при создании работника"})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{"id": worker.ID, "name": worker.Name, "phone": worker.Phone})
+}
+
+func DeleteWorker(c *gin.Context) {
+	id := c.Param("id")
+	if err := database.DB.Delete(&models.Worker{}, id).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка при удалении"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Работник удалён"})
 }

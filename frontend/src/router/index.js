@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import AdminLogin from '../views/AdminLogin.vue'
 import AdminPanel from '../views/AdminPanel.vue'
+import PickupPanel from '../views/PickupPanel.vue'
 
 const routes = [
   { path: '/', name: 'Landing', component: Landing },
@@ -11,6 +12,7 @@ const routes = [
   { path: '/register', name: 'Register', component: Register },
   { path: '/admin/login', name: 'AdminLogin', component: AdminLogin },
   { path: '/admin', name: 'AdminPanel', component: AdminPanel, meta: { requiresAdmin: true } },
+  { path: '/pickup', name: 'PickupPanel', component: PickupPanel, meta: { requiresWorker: true } },
 ]
 
 const router = createRouter({
@@ -24,6 +26,13 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAdmin) {
     const token = localStorage.getItem('adminToken')
+    if (!token) {
+      next('/admin/login')
+      return
+    }
+  }
+  if (to.meta.requiresWorker) {
+    const token = localStorage.getItem('workerToken')
     if (!token) {
       next('/admin/login')
       return

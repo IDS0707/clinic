@@ -31,6 +31,7 @@ func Migrate() {
 	err := DB.AutoMigrate(
 		&models.User{},
 		&models.Admin{},
+		&models.Worker{},
 		&models.Product{},
 		&models.Order{},
 		&models.OrderItem{},

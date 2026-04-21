@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
 	"strings"
 
@@ -25,6 +26,17 @@ type CreateOrderInput struct {
 	Phone string           `json:"phone" binding:"required"`
 }
 
+func generateOrderCode() string {
+	for {
+		code := fmt.Sprintf("%06d", rand.Intn(900000)+100000)
+		var count int64
+		database.DB.Model(&models.Order{}).Where("order_code = ?", code).Count(&count)
+		if count == 0 {
+			return code
+		}
+	}
+}
+
 func CreateOrder(c *gin.Context) {
 	userID, _ := c.Get("userID")
 
@@ -35,9 +47,10 @@ func CreateOrder(c *gin.Context) {
 	}
 
 	order := models.Order{
-		UserID: userID.(uint),
-		Status: "pending",
-		Phone:  input.Phone,
+		UserID:    userID.(uint),
+		Status:    "pending",
+		Phone:     input.Phone,
+		OrderCode: generateOrderCode(),
 	}
 
 	tx := database.DB.Begin()

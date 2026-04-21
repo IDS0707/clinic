@@ -220,7 +220,12 @@
             </svg>
           </div>
           <h3 class="text-2xl font-serif text-stone-900 mb-2">Заказ оформлен!</h3>
-          <p class="text-stone-500 mb-8 leading-relaxed">Мы свяжемся с вами в ближайшее время для подтверждения</p>
+          <p class="text-stone-500 mb-4 leading-relaxed">Мы свяжемся с вами в ближайшее время для подтверждения</p>
+          <div v-if="lastOrderCode" class="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-6">
+            <p class="text-xs text-blue-500 font-medium uppercase tracking-wider mb-1">Ваш код заказа</p>
+            <p class="text-4xl font-bold text-blue-700 tracking-widest">{{ lastOrderCode }}</p>
+            <p class="text-xs text-blue-400 mt-1">Назовите этот код на пункте выдачи</p>
+          </div>
           <button @click="showSuccess = false" class="btn-primary w-full">
             Отлично
           </button>
@@ -249,6 +254,7 @@ const t = computed(() => langStore.t)
 const products = ref([])
 const loading = ref(true)
 const showSuccess = ref(false)
+const lastOrderCode = ref('')
 
 const patientPhotos = [
   'photo_2026-04-21_23-34-03.jpg',
@@ -317,11 +323,12 @@ async function placeOrder() {
       unit_type: item.unit_type || 'pack'
     }))
 
-    await api.post('/orders', {
+    const res = await api.post('/orders', {
       items,
       phone: authStore.user.phone
     })
 
+    lastOrderCode.value = res.data.order_code || ''
     cartStore.clear()
     cartStore.toggle()
     showSuccess.value = true

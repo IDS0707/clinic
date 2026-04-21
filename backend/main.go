@@ -54,6 +54,9 @@ func main() {
 				protected.POST("/products/:id/image", handlers.UploadProductImage)
 				protected.GET("/orders", handlers.GetOrders)
 				protected.PUT("/orders/:id/status", handlers.UpdateOrderStatus)
+				protected.GET("/workers", handlers.GetWorkers)
+				protected.POST("/workers", handlers.CreateWorker)
+				protected.DELETE("/workers/:id", handlers.DeleteWorker)
 			}
 		}
 
@@ -68,6 +71,14 @@ func main() {
 		{
 			orders.POST("", handlers.CreateOrder)
 			orders.GET("", handlers.GetUserOrders)
+		}
+
+		pickup := api.Group("/pickup")
+		pickup.Use(middleware.WorkerAuth())
+		{
+			pickup.GET("/orders", handlers.GetPickupOrders)
+			pickup.GET("/orders/code/:code", handlers.GetOrderByCode)
+			pickup.PUT("/orders/:id/status", handlers.UpdatePickupOrderStatus)
 		}
 	}
 

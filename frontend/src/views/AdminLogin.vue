@@ -81,11 +81,15 @@ async function handleLogin() {
   error.value = ''
   loading.value = true
   try {
-    await authStore.adminLogin({
+    const result = await authStore.adminLogin({
       phone: '998' + phone.value,
       password: password.value
     })
-    router.push('/admin')
+    if (result.role === 'worker') {
+      router.push('/pickup')
+    } else {
+      router.push('/admin')
+    }
   } catch (e) {
     error.value = e.response?.data?.error || 'Неверные учетные данные'
   } finally {

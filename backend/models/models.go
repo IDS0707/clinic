@@ -18,6 +18,13 @@ type Admin struct {
 	Password string `gorm:"not null" json:"-"`
 }
 
+type Worker struct {
+	ID       uint   `gorm:"primaryKey" json:"id"`
+	Name     string `gorm:"not null" json:"name"`
+	Phone    string `gorm:"uniqueIndex;not null" json:"phone"`
+	Password string `gorm:"not null" json:"-"`
+}
+
 type Product struct {
 	ID              uint      `gorm:"primaryKey" json:"id"`
 	Name            string    `gorm:"not null" json:"name"`
@@ -40,6 +47,7 @@ type Order struct {
 	Items     []OrderItem `json:"items"`
 	Status    string      `gorm:"default:'pending';not null" json:"status"`
 	Phone     string      `gorm:"not null" json:"phone"`
+	OrderCode string      `gorm:"uniqueIndex;size:6" json:"order_code"`
 	CreatedAt time.Time   `json:"created_at"`
 }
 

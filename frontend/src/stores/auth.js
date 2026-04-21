@@ -7,9 +7,12 @@ const api = axios.create({ baseURL: '/api' })
 
 api.interceptors.request.use(config => {
   const adminToken = localStorage.getItem('adminToken') || ''
+  const workerToken = localStorage.getItem('workerToken') || ''
   const userToken = localStorage.getItem('userToken') || ''
   if (config.url?.startsWith('/admin') && adminToken) {
     config.headers.Authorization = `Bearer ${adminToken}`
+  } else if (config.url?.startsWith('/pickup') && workerToken) {
+    config.headers.Authorization = `Bearer ${workerToken}`
   } else if (userToken) {
     config.headers.Authorization = `Bearer ${userToken}`
   }
@@ -23,9 +26,12 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref(JSON.parse(localStorage.getItem('user') || 'null'))
   const adminToken = ref(localStorage.getItem('adminToken') || '')
   const admin = ref(JSON.parse(localStorage.getItem('admin') || 'null'))
+  const workerToken = ref(localStorage.getItem('workerToken') || '')
+  const worker = ref(JSON.parse(localStorage.getItem('worker') || 'null'))
 
   const isLoggedIn = computed(() => !!token.value)
   const isAdmin = computed(() => !!adminToken.value)
+  const isWorker = computed(() => !!workerToken.value)
 
   async function register(data) {
     const res = await api.post('/auth/register', data)
@@ -47,10 +53,17 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function adminLogin(data) {
     const res = await api.post('/admin/login', data)
-    adminToken.value = res.data.token
-    admin.value = res.data.admin
-    localStorage.setItem('adminToken', res.data.token)
-    localStorage.setItem('admin', JSON.stringify(res.data.admin))
+    if (res.data.role === 'worker') {
+      workerToken.value = res.data.token
+      worker.value = res.data.worker
+      localStorage.setItem('workerToken', res.data.token)
+      localStorage.setItem('worker', JSON.stringify(res.data.worker))
+    } else {
+      adminToken.value = res.data.token
+      admin.value = res.data.admin
+      localStorage.setItem('adminToken', res.data.token)
+      localStorage.setItem('admin', JSON.stringify(res.data.admin))
+    }
     return res.data
   }
 
@@ -68,9 +81,16 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('admin')
   }
 
+  function workerLogout() {
+    workerToken.value = ''
+    worker.value = null
+    localStorage.removeItem('workerToken')
+    localStorage.removeItem('worker')
+  }
+
   return {
-    token, user, adminToken, admin,
-    isLoggedIn, isAdmin,
-    register, login, adminLogin, logout, adminLogout
+    token, user, adminToken, admin, workerToken, worker,
+    isLoggedIn, isAdmin, isWorker,
+    register, login, adminLogin, logout, adminLogout, workerLogout
   }
 })

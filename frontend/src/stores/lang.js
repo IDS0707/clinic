@@ -128,6 +128,16 @@ const translations = {
     footer_weekdays: 'Пн — Пт',
     footer_weekends: 'Сб — Вс',
     footer_holiday: 'Выходной',
+
+    // My orders drawer
+    orders_title: 'Мои заказы',
+    orders_count: 'заказов',
+    orders_empty: 'Заказов пока нет',
+    orders_code: 'Код заказа',
+    status_pending: 'Ожидает',
+    status_confirmed: 'Одобрено',
+    status_delivered: 'Выдано',
+    status_cancelled: 'Отменено',
   },
   uz: {
     // Navbar
@@ -242,5 +252,15 @@ const translations = {
     footer_weekdays: 'Du — Ju',
     footer_weekends: 'Sha — Ya',
     footer_holiday: 'Dam olish kuni',
+
+    // My orders drawer
+    orders_title: 'Mening buyurtmalarim',
+    orders_count: 'buyurtma',
+    orders_empty: 'Hozircha buyurtmalar yo\'q',
+    orders_code: 'Buyurtma kodi',
+    status_pending: 'Kutilmoqda',
+    status_confirmed: 'Tasdiqlandi',
+    status_delivered: 'Berildi',
+    status_cancelled: 'Bekor qilindi',
   }
 }

@@ -51,6 +51,15 @@
               :class="langStore.current === 'uz' ? 'bg-brand-600 text-white shadow-sm' : 'text-stone-500 hover:text-stone-700'"
             >UZ</button>
           </div>
+          <!-- My Orders (visible when logged in) -->
+          <button v-if="authStore.isLoggedIn" @click="ordersStore.toggle()"
+                  class="relative p-2.5 rounded-xl text-stone-500 hover:text-brand-700 hover:bg-brand-50/60 transition-all duration-300 group"
+                  :title="t.orders_title">
+            <svg class="w-5 h-5 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+          </button>
+
           <!-- Cart -->
           <button @click="cartStore.toggle()"
                   class="relative p-2.5 rounded-xl text-stone-500 hover:text-brand-700 hover:bg-brand-50/60 transition-all duration-300 group">
@@ -98,10 +107,12 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useCartStore } from '../stores/cart'
+import { useOrdersStore } from '../stores/orders'
 import { useLangStore } from '../stores/lang'
 
 const authStore = useAuthStore()
 const cartStore = useCartStore()
+const ordersStore = useOrdersStore()
 const langStore = useLangStore()
 const t = computed(() => langStore.t)
 const scrolled = ref(false)

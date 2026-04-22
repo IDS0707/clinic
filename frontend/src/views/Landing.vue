@@ -2,6 +2,7 @@
   <div class="bg-surface">
     <Navbar />
     <CartDrawer @checkout="placeOrder" />
+    <OrdersDrawer />
 
     <!-- Hero -->
     <section class="relative min-h-screen flex items-center bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900 overflow-hidden">
@@ -242,6 +243,7 @@ import Navbar from '../components/Navbar.vue'
 import DoctorSection from '../components/DoctorSection.vue'
 import ProductCard from '../components/ProductCard.vue'
 import CartDrawer from '../components/CartDrawer.vue'
+import OrdersDrawer from '../components/OrdersDrawer.vue'
 import Footer from '../components/Footer.vue'
 import { useCartStore } from '../stores/cart'
 import { useAuthStore, api } from '../stores/auth'

@@ -269,7 +269,7 @@ const ordersLoading = ref(false)
 async function loadOrders() {
   ordersLoading.value = true
   try {
-    const res = await api.get('/orders/my')
+    const res = await api.get('/orders')
     orders.value = res.data || []
   } catch {
     orders.value = []

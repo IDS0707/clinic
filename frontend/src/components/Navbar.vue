@@ -5,13 +5,11 @@
       <div class="flex justify-between items-center h-[72px]">
         <!-- Logo -->
         <router-link to="/" class="flex items-center gap-3 group">
-          <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center shadow-md shadow-brand-600/20 group-hover:shadow-lg group-hover:shadow-brand-600/30 group-hover:scale-105 transition-all duration-300">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 007.92 12.446A9 9 0 1112 2.992z" />
-            </svg>
+          <div class="w-10 h-10 rounded-xl bg-white border border-stone-200 flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300 overflow-hidden">
+            <img src="/images/patients/logo.png" alt="Soglom Turmush logotipi" class="w-full h-full object-contain p-0.5" />
           </div>
           <div class="leading-tight">
-            <span class="text-lg font-bold tracking-tight text-stone-900 group-hover:text-brand-700 transition-colors duration-300">Hair Clinic</span>
+            <span class="text-lg font-bold tracking-tight text-stone-900 group-hover:text-brand-700 transition-colors duration-300">Soglom Turmush</span>
             <span class="block text-[10px] font-medium tracking-widest uppercase text-brand-600">{{ t.footer_trich }}</span>
           </div>
         </router-link>

@@ -23,7 +23,14 @@
     <!-- Content -->
     <div class="p-5">
       <h3 class="font-semibold text-stone-900 text-base mb-1 truncate group-hover:text-brand-700 transition-colors duration-300">{{ product.name }}</h3>
-      <p v-if="product.description" class="text-stone-400 text-sm mb-4 line-clamp-2 leading-relaxed">{{ product.description }}</p>
+      <p v-if="product.description" class="text-stone-400 text-sm mb-2 line-clamp-3 leading-relaxed">{{ shortDescription }}</p>
+      <button
+        v-if="isDescriptionLong"
+        @click="openDescription"
+        class="text-xs font-semibold text-brand-700 hover:text-brand-800 mb-4"
+      >
+        {{ t.product_read_more }}
+      </button>
 
       <!-- Prices -->
       <div class="space-y-2 mb-5">
@@ -51,21 +58,64 @@
         {{ t.add_to_cart }}
       </button>
     </div>
+
+    <!-- Mini panel with full description -->
+    <div
+      v-if="isDescriptionOpen"
+      class="fixed inset-0 z-50 bg-stone-900/50 backdrop-blur-sm flex items-center justify-center p-4"
+      @click.self="closeDescription"
+    >
+      <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-stone-100 p-5">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <h4 class="text-base font-bold text-stone-900">{{ t.product_description }}</h4>
+          <button
+            @click="closeDescription"
+            class="text-xs font-semibold text-stone-500 hover:text-stone-700"
+          >
+            {{ t.product_close }}
+          </button>
+        </div>
+        <p class="text-sm text-stone-600 leading-relaxed whitespace-pre-line">{{ product.description }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useLangStore } from '../stores/lang'
 
 const langStore = useLangStore()
 const t = computed(() => langStore.t)
 
-defineProps({
+const props = defineProps({
   product: { type: Object, required: true }
 })
 
 defineEmits(['add-to-cart'])
+
+const DESCRIPTION_PREVIEW_WORDS = 20
+const isDescriptionOpen = ref(false)
+
+const descriptionWords = computed(() => {
+  return (props.product.description || '').trim().split(/\s+/).filter(Boolean)
+})
+
+const isDescriptionLong = computed(() => descriptionWords.value.length > DESCRIPTION_PREVIEW_WORDS)
+
+const shortDescription = computed(() => {
+  if (!props.product.description) return ''
+  if (!isDescriptionLong.value) return props.product.description
+  return `${descriptionWords.value.slice(0, DESCRIPTION_PREVIEW_WORDS).join(' ')}...`
+})
+
+function openDescription() {
+  isDescriptionOpen.value = true
+}
+
+function closeDescription() {
+  isDescriptionOpen.value = false
+}
 
 function formatPrice(price) {
   return new Intl.NumberFormat('ru-RU').format(Math.round(price))

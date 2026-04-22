@@ -26,7 +26,7 @@ const translations = {
     nav_logout: 'Выйти',
 
     // Hero
-    hero_label: 'Профессиональная трихология',
+    hero_label: 'Современная медицинская клиника',
     hero_title1: 'Ваше здоровье —',
     hero_title2: 'Наш приоритет',
     hero_desc: 'Профессиональная забота о вашем здоровье с современным медицинским оборудованием и опытными врачами',
@@ -44,10 +44,10 @@ const translations = {
 
     // Doctor
     doctor_label: 'Ведущий специалист',
-    doctor_title1: 'Наш специалист по',
-    doctor_title2: 'лечению волос',
-    doctor_desc1: 'Опытный специалист-трихолог с многолетним стажем работы в области диагностики и лечения заболеваний волос и кожи головы.',
-    doctor_desc2: 'Наша клиника использует современные препараты и индивидуальный подход к каждому пациенту для достижения максимального результата лечения.',
+    doctor_title1: 'Ваше здоровье -',
+    doctor_title2: 'наша ответственность',
+    doctor_desc1: 'Опытный медицинский специалист с многолетней практикой и внимательным отношением к каждому пациенту.',
+    doctor_desc2: 'Мы подбираем препараты и консультации индивидуально, чтобы поддерживать ваше самочувствие и комфорт.',
     doctor_individual: 'Индивидуальный',
     doctor_approach: 'подход',
     doctor_modern: 'Современные',
@@ -63,14 +63,14 @@ const translations = {
     // Products
     products_label: 'Каталог',
     products_title: 'Наши препараты',
-    products_desc: 'Эффективные средства для лечения и восстановления волос, подобранные нашими специалистами',
+    products_desc: 'Сертифицированные препараты и консультационная поддержка от специалистов клиники',
     products_loading: 'Загрузка...',
     products_empty: 'Препараты скоро появятся',
 
     // CTA
     cta_label: 'Начните сегодня',
-    cta_title: 'Начните лечение уже сегодня',
-    cta_desc: 'Зарегистрируйтесь и получите доступ к полному каталогу препаратов от специалистов',
+    cta_title: 'Позаботьтесь о здоровье уже сегодня',
+    cta_desc: 'Зарегистрируйтесь и получите доступ к полному каталогу препаратов и поддержке специалистов',
     cta_register: 'Зарегистрироваться',
 
     // Contacts
@@ -106,13 +106,16 @@ const translations = {
     product_one_pill: '1 таблетка',
     product_pack: 'Упаковка',
     add_to_cart: 'В корзину',
+    product_read_more: 'Ещё',
+    product_description: 'Описание препарата',
+    product_close: 'Закрыть',
     no_photo: 'Нет фото',
     currency: 'сўм',
     unit_piece: 'шт',
     unit_pack: 'коробка',
 
     // Footer
-    footer_trich: 'Трихология',
+    footer_trich: 'Ваше здоровье - наша ответственность',
     footer_desc: 'Качественные медицинские услуги с искренностью и совершенством.',
     footer_links: 'Ссылки',
     footer_services: 'Услуги',
@@ -121,7 +124,7 @@ const translations = {
     footer_services_ther: 'Терапия',
     footer_services_neur: 'Неврология',
     footer_contacts: 'Контакты',
-    footer_copy: '© 2026 Клиника Hair Clinic. Все права защищены.',
+    footer_copy: '© 2026 Клиника Soglom Turmush. Все права защищены.',
     footer_admin: 'Админ',
     footer_main: 'Главная',
     footer_about_us: 'О нас',
@@ -150,7 +153,7 @@ const translations = {
     nav_logout: 'Chiqish',
 
     // Hero
-    hero_label: 'Professional Trixologiya',
+    hero_label: 'Zamonaviy tibbiy klinika',
     hero_title1: 'Sog\'ligingiz —',
     hero_title2: 'Bizning ustuvorligimiz',
     hero_desc: "Zamonaviy tibbiy uskunalar va tajribali shifokorlar bilan sog'ligingizga professional g'amxo'rlik",
@@ -168,10 +171,10 @@ const translations = {
 
     // Doctor
     doctor_label: 'Yetakchi mutaxassis',
-    doctor_title1: 'Bizning mutaxassisimiz',
-    doctor_title2: 'soch davolash bo\'yicha',
-    doctor_desc1: "Ko'p yillik ish tajribasiga ega tajribali trixolog mutaxassis soch va bosh terisi kasalliklarini tashxislash va davolash sohasida.",
-    doctor_desc2: "Klinikamiz har bir bemorga maksimal davolash natijasiga erishish uchun zamonaviy dorilar va individual yondashuvdan foydalanadi.",
+    doctor_title1: 'Sog\'ligingiz -',
+    doctor_title2: 'bizning mas\'uliyatimiz',
+    doctor_desc1: "Ko'p yillik tajribaga ega mutaxassislarimiz har bir bemorga e'tibor bilan yondashadi.",
+    doctor_desc2: "Biz dorilar va maslahatlarni individual tarzda tavsiya qilib, sog'ligingiz va qulayligingizni qo'llab-quvvatlaymiz.",
     doctor_individual: 'Individual',
     doctor_approach: 'yondashuv',
     doctor_modern: 'Zamonaviy',
@@ -187,14 +190,14 @@ const translations = {
     // Products
     products_label: 'Katalog',
     products_title: 'Bizning dorilarimiz',
-    products_desc: "Mutaxassislarimiz tomonidan tanlangan soch davolash va tiklash uchun samarali vositalar",
+    products_desc: "Sertifikatlangan dorilar va mutaxassislar tomonidan konsultativ yordam",
     products_loading: 'Yuklanmoqda...',
     products_empty: 'Dorilar tez orada paydo bo\'ladi',
 
     // CTA
     cta_label: 'Bugun boshlang',
-    cta_title: 'Davolashni bugun boshlang',
-    cta_desc: "Ro'yxatdan o'ting va mutaxassislardan to'liq dorilar katalogiga kirish imkoniyatiga ega bo'ling",
+    cta_title: 'Sog\'ligingizga bugun e\'tibor bering',
+    cta_desc: "Ro'yxatdan o'ting va to'liq dorilar katalogi hamda mutaxassislar yordamini oling",
     cta_register: "Ro'yxatdan o'tish",
 
     // Contacts
@@ -230,13 +233,16 @@ const translations = {
     product_one_pill: '1 tabletka',
     product_pack: 'Quti',
     add_to_cart: 'Savatga',
+    product_read_more: 'Batafsil',
+    product_description: 'Dori tavsifi',
+    product_close: 'Yopish',
     no_photo: 'Rasm yo\'q',
     currency: 'so\'m',
     unit_piece: 'dona',
     unit_pack: 'quti',
 
     // Footer
-    footer_trich: 'Trixologiya',
+    footer_trich: 'Sog\'ligingiz - bizning mas\'uliyatimiz',
     footer_desc: "Samimiylik va mukammallik bilan sifatli tibbiy xizmatlar.",
     footer_links: 'Havolalar',
     footer_services: 'Xizmatlar',
@@ -245,7 +251,7 @@ const translations = {
     footer_services_ther: 'Terapiya',
     footer_services_neur: 'Nevrologiya',
     footer_contacts: 'Kontaktlar',
-    footer_copy: '© 2026 Hair Clinic klinikasi. Barcha huquqlar himoyalangan.',
+    footer_copy: '© 2026 Soglom Turmush klinikasi. Barcha huquqlar himoyalangan.',
     footer_admin: 'Admin',
     footer_main: 'Bosh sahifa',
     footer_about_us: 'Biz haqimizda',

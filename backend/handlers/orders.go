@@ -105,8 +105,6 @@ func CreateOrder(c *gin.Context) {
 		order.Items[i].Product.ComputePackPrice()
 	}
 
-	go sendTelegramNotification(order)
-
 	c.JSON(http.StatusCreated, order)
 }
 
@@ -203,7 +201,10 @@ func sendTelegramNotification(order models.Order) {
 	}
 
 	var sb strings.Builder
-	sb.WriteString("🔔 НОВЫЙ ЗАКАЗ\n\n")
+	sb.WriteString("✅ ТОВАР ВЫДАН\n\n")
+	if order.OrderCode != "" {
+		sb.WriteString(fmt.Sprintf("🔑 Код заказа: %s\n\n", order.OrderCode))
+	}
 
 	var totalSum float64
 	for _, item := range order.Items {

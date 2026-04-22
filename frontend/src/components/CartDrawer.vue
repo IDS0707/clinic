@@ -6,8 +6,8 @@
         <!-- Header -->
         <div class="flex items-center justify-between px-6 py-5 border-b border-stone-100">
           <div>
-            <h2 class="text-xl font-serif text-stone-900">Корзина</h2>
-            <p v-if="cartStore.totalItems > 0" class="text-xs text-stone-400 mt-0.5">{{ cartStore.totalItems }} товаров</p>
+            <h2 class="text-xl font-serif text-stone-900">{{ t.cart_title }}</h2>
+            <p v-if="cartStore.totalItems > 0" class="text-xs text-stone-400 mt-0.5">{{ cartStore.totalItems }} {{ t.cart_items }}</p>
           </div>
           <button @click="cartStore.toggle()" class="p-2 hover:bg-stone-100 rounded-xl hover:rotate-90 transition-all duration-300">
             <svg class="w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -23,8 +23,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
             </svg>
           </div>
-          <p class="text-stone-800 text-lg font-medium mb-1">Корзина пуста</p>
-          <p class="text-stone-400 text-sm">Добавьте препараты из каталога</p>
+          <p class="text-stone-800 text-lg font-medium mb-1">{{ t.cart_empty }}</p>
+          <p class="text-stone-400 text-sm">{{ t.cart_empty_sub }}</p>
         </div>
 
         <!-- Items -->
@@ -54,8 +54,8 @@
                   </button>
                 </div>
                 <p class="text-brand-600 font-semibold text-sm mt-0.5">
-                  {{ formatPrice(item.unit_type === 'piece' ? item.price_per_pill : item.price_per_pack) }} сўм
-                  <span class="text-stone-400 font-normal text-xs">/ {{ item.unit_type === 'piece' ? 'шт' : 'упак' }}</span>
+                  {{ formatPrice(item.unit_type === 'piece' ? item.price_per_pill : item.price_per_pack) }} {{ t.currency }}
+                  <span class="text-stone-400 font-normal text-xs">/ {{ item.unit_type === 'piece' ? t.unit_piece : t.unit_pack }}</span>
                 </p>
               </div>
             </div>
@@ -67,12 +67,12 @@
                   @click="cartStore.updateUnitType(item.product_id, 'piece')"
                   :class="item.unit_type === 'piece' ? 'bg-brand-700 text-white shadow-sm' : 'bg-white text-stone-500 border border-stone-200 hover:border-stone-300'"
                   class="px-2.5 py-1 rounded-lg text-xs font-medium transition-all"
-                >шт</button>
+                >{{ t.unit_piece }}</button>
                 <button
                   @click="cartStore.updateUnitType(item.product_id, 'pack')"
                   :class="(item.unit_type || 'pack') === 'pack' ? 'bg-brand-700 text-white shadow-sm' : 'bg-white text-stone-500 border border-stone-200 hover:border-stone-300'"
                   class="px-2.5 py-1 rounded-lg text-xs font-medium transition-all"
-                >коробка</button>
+                >{{ t.unit_pack }}</button>
               </div>
 
               <div class="flex items-center gap-2">
@@ -89,7 +89,7 @@
             </div>
 
             <div class="text-right mt-2">
-              <span class="text-xs font-semibold text-stone-500">Итого: <span class="text-brand-700">{{ formatPrice(itemTotal(item)) }} сўм</span></span>
+              <span class="text-xs font-semibold text-stone-500">{{ t.cart_item_total }} <span class="text-brand-700">{{ formatPrice(itemTotal(item)) }} {{ t.currency }}</span></span>
             </div>
           </div>
         </div>
@@ -97,14 +97,14 @@
         <!-- Footer -->
         <div v-if="cartStore.items.length > 0" class="border-t border-stone-100 px-6 py-5 bg-stone-50/50">
           <div class="flex justify-between items-baseline mb-4">
-            <span class="text-sm font-medium text-stone-500">Итого к оплате</span>
-            <span class="text-2xl font-serif text-brand-700">{{ formatPrice(cartStore.totalPrice) }} <span class="text-sm font-sans">сўм</span></span>
+            <span class="text-sm font-medium text-stone-500">{{ t.cart_total }}</span>
+            <span class="text-2xl font-serif text-brand-700">{{ formatPrice(cartStore.totalPrice) }} <span class="text-sm font-sans">{{ t.currency }}</span></span>
           </div>
           <button
             @click="checkout"
             class="w-full btn-primary py-4 text-base rounded-xl"
           >
-            Оформить заказ
+            {{ t.cart_checkout }}
           </button>
         </div>
       </div>
@@ -113,13 +113,17 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useCartStore } from '../stores/cart'
 import { useAuthStore } from '../stores/auth'
+import { useLangStore } from '../stores/lang'
 import { useRouter } from 'vue-router'
 
 const cartStore = useCartStore()
 const authStore = useAuthStore()
 const router = useRouter()
+const langStore = useLangStore()
+const t = computed(() => langStore.t)
 
 const emit = defineEmits(['checkout'])
 

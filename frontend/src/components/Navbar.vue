@@ -12,7 +12,7 @@
           </div>
           <div class="leading-tight">
             <span class="text-lg font-bold tracking-tight text-stone-900 group-hover:text-brand-700 transition-colors duration-300">Hair Clinic</span>
-            <span class="block text-[10px] font-medium tracking-widest uppercase text-brand-600">Трихология</span>
+            <span class="block text-[10px] font-medium tracking-widest uppercase text-brand-600">{{ t.footer_trich }}</span>
           </div>
         </router-link>
 

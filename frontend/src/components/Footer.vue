@@ -113,10 +113,10 @@
             <p class="text-stone-400">{{ t.contacts_map_subtitle }}</p>
           </div>
           <div class="grid md:grid-cols-2 gap-8 items-start">
-            <!-- Google map embed -->
+            <!-- Google map embed — clinic location: Q9GH+G74, Andijon -->
             <div class="rounded-2xl overflow-hidden shadow-lg border border-stone-100 h-80">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2992.948523019946!2d72.36291167581!3d40.76539997137987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38bb77e3e6f4e3d5%3A0x5a52df93d7aadf0b!2sAndijon%2C%20Xuja%20ko&#39;chasi%2C%2027!5e0!3m2!1sru!2s!4v1713000000000"
+                src="https://maps.google.com/maps?q=Q9GH%2BG74+Andijon+Uzbekistan&z=17&output=embed"
                 width="100%"
                 height="100%"
                 style="border:0;"
@@ -162,7 +162,7 @@
                 </div>
               </div>
               <a
-                href="https://maps.google.com/?q=Andijan+Xuja+27"
+                href="https://maps.google.com/?q=Q9GH%2BG74,+Andijon,+Andijon+Viloyati,+Uzbekistan"
                 target="_blank"
                 class="flex items-center justify-center gap-2 w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-600/30"
               >
@@ -193,7 +193,7 @@
               </div>
               <div>
                 <span class="text-lg font-bold tracking-tight">Hair Clinic</span>
-                <span class="block text-[10px] font-medium tracking-widest uppercase text-brand-400">Трихология</span>
+                <span class="block text-[10px] font-medium tracking-widest uppercase text-brand-400">{{ t.footer_trich }}</span>
               </div>
             </div>
             <p class="text-white/40 text-sm leading-relaxed max-w-sm">{{ t.footer_desc }}</p>
@@ -219,12 +219,12 @@
             <h4 class="text-xs font-semibold tracking-widest uppercase text-white/60 mb-5">{{ t.contacts_hours_label }}</h4>
             <div class="space-y-3 text-sm text-white/40">
               <div class="flex justify-between">
-                <span>Пн — Пт</span>
+                <span>{{ t.footer_weekdays }}</span>
                 <span class="text-white/60 font-medium">08:00 — 17:00</span>
               </div>
               <div class="flex justify-between">
-                <span>Сб — Вс</span>
-                <span class="text-white/60 font-medium">Выходной</span>
+                <span>{{ t.footer_weekends }}</span>
+                <span class="text-white/60 font-medium">{{ t.footer_holiday }}</span>
               </div>
             </div>
           </div>

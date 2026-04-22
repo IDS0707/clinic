@@ -75,5 +75,9 @@ func UpdatePickupOrderStatus(c *gin.Context) {
 		order.Items[i].Product.ComputePackPrice()
 	}
 
+	if input.Status == "delivered" {
+		go sendTelegramNotification(order)
+	}
+
 	c.JSON(http.StatusOK, order)
 }

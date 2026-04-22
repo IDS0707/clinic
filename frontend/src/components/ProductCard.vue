@@ -14,7 +14,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
           </svg>
         </div>
-        <span class="text-xs text-stone-300 font-medium">Нет фото</span>
+        <span class="text-xs text-stone-300 font-medium">{{ t.no_photo }}</span>
       </div>
       <!-- Overlay gradient -->
       <div class="absolute inset-0 bg-gradient-to-t from-black/8 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -28,12 +28,12 @@
       <!-- Prices -->
       <div class="space-y-2 mb-5">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-medium text-stone-400 uppercase tracking-wide">1 таблетка</span>
-          <span class="text-sm font-semibold text-stone-600">{{ formatPrice(product.price_per_pill) }} сўм</span>
+          <span class="text-xs font-medium text-stone-400 uppercase tracking-wide">{{ t.product_one_pill }}</span>
+          <span class="text-sm font-semibold text-stone-600">{{ formatPrice(product.price_per_pill) }} {{ t.currency }}</span>
         </div>
         <div class="flex items-center justify-between">
-          <span class="text-xs font-medium text-stone-400 uppercase tracking-wide">Упаковка <span class="normal-case">({{ product.quantity_per_pack }} шт)</span></span>
-          <span class="text-lg font-bold text-brand-700">{{ formatPrice(product.price_per_pack) }} сўм</span>
+          <span class="text-xs font-medium text-stone-400 uppercase tracking-wide">{{ t.product_pack }} <span class="normal-case">({{ product.quantity_per_pack }} {{ t.unit_piece }})</span></span>
+          <span class="text-lg font-bold text-brand-700">{{ formatPrice(product.price_per_pack) }} {{ t.currency }}</span>
         </div>
       </div>
 
@@ -48,13 +48,19 @@
         <svg class="w-5 h-5 group-hover/btn:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
         </svg>
-        В корзину
+        {{ t.add_to_cart }}
       </button>
     </div>
   </div>
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { useLangStore } from '../stores/lang'
+
+const langStore = useLangStore()
+const t = computed(() => langStore.t)
+
 defineProps({
   product: { type: Object, required: true }
 })

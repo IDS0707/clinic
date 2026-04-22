@@ -93,7 +93,26 @@ const translations = {
     contacts_map_subtitle: 'Расположены в городе Андижан',
     contacts_directions: 'Построить маршрут',
 
+    // Cart
+    cart_title: 'Корзина',
+    cart_items: 'товаров',
+    cart_empty: 'Корзина пуста',
+    cart_empty_sub: 'Добавьте препараты из каталога',
+    cart_item_total: 'Итого:',
+    cart_total: 'Итого к оплате',
+    cart_checkout: 'Оформить заказ',
+
+    // Product card
+    product_one_pill: '1 таблетка',
+    product_pack: 'Упаковка',
+    add_to_cart: 'В корзину',
+    no_photo: 'Нет фото',
+    currency: 'сўм',
+    unit_piece: 'шт',
+    unit_pack: 'коробка',
+
     // Footer
+    footer_trich: 'Трихология',
     footer_desc: 'Качественные медицинские услуги с искренностью и совершенством.',
     footer_links: 'Ссылки',
     footer_services: 'Услуги',
@@ -106,6 +125,9 @@ const translations = {
     footer_admin: 'Админ',
     footer_main: 'Главная',
     footer_about_us: 'О нас',
+    footer_weekdays: 'Пн — Пт',
+    footer_weekends: 'Сб — Вс',
+    footer_holiday: 'Выходной',
   },
   uz: {
     // Navbar
@@ -185,7 +207,26 @@ const translations = {
     contacts_map_subtitle: 'Andijon shahrida joylashgan',
     contacts_directions: "Yo'nalish olish",
 
+    // Cart
+    cart_title: 'Savat',
+    cart_items: 'mahsulot',
+    cart_empty: 'Savat bo\'sh',
+    cart_empty_sub: 'Katalogdan dorilar qo\'shing',
+    cart_item_total: 'Jami:',
+    cart_total: 'To\'lash uchun jami',
+    cart_checkout: 'Buyurtma berish',
+
+    // Product card
+    product_one_pill: '1 tabletka',
+    product_pack: 'Quti',
+    add_to_cart: 'Savatga',
+    no_photo: 'Rasm yo\'q',
+    currency: 'so\'m',
+    unit_piece: 'dona',
+    unit_pack: 'quti',
+
     // Footer
+    footer_trich: 'Trixologiya',
     footer_desc: "Samimiylik va mukammallik bilan sifatli tibbiy xizmatlar.",
     footer_links: 'Havolalar',
     footer_services: 'Xizmatlar',
@@ -198,5 +239,8 @@ const translations = {
     footer_admin: 'Admin',
     footer_main: 'Bosh sahifa',
     footer_about_us: 'Biz haqimizda',
+    footer_weekdays: 'Du — Ju',
+    footer_weekends: 'Sha — Ya',
+    footer_holiday: 'Dam olish kuni',
   }
 }

@@ -99,7 +99,6 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useCartStore } from '../stores/cart'
 import { useLangStore } from '../stores/lang'
-import { useLangStore } from '../stores/lang'
 
 const authStore = useAuthStore()
 const cartStore = useCartStore()

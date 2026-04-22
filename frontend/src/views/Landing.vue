@@ -1,7 +1,7 @@
 <template>
   <div class="bg-surface">
     <Navbar />
-    <CartDrawer @checkout="placeOrder" />
+    <CartDrawer ref="cartDrawerRef" @checkout="placeOrder" />
     <OrdersDrawer />
 
     <!-- Hero -->
@@ -253,6 +253,7 @@ const cartStore = useCartStore()
 const authStore = useAuthStore()
 const langStore = useLangStore()
 const t = computed(() => langStore.t)
+const cartDrawerRef = ref(null)
 const products = ref([])
 const loading = ref(true)
 const showSuccess = ref(false)
@@ -332,6 +333,7 @@ async function placeOrder() {
 
     lastOrderCode.value = res.data.order_code || ''
     showSuccess.value = true
+    cartDrawerRef.value?.showOrders()
   } catch (e) {
     alert(e.response?.data?.error || 'Ошибка при оформлении заказа')
   }

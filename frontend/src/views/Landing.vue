@@ -61,7 +61,7 @@
               <!-- Decorative ring -->
               <div class="absolute -inset-4 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20"></div>
               <img
-                src="/images/doctor.png"
+                src="/images/patients/3%20landing.jpg"
                 alt="Специалист клиники"
                 class="relative rounded-2xl w-full object-cover object-top shadow-2xl shadow-brand-900/40"
                 style="max-height: 500px;"

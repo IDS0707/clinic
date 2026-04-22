@@ -9,7 +9,7 @@
           <div class="absolute -inset-4 bg-gradient-to-br from-brand-100 to-brand-50 rounded-3xl -rotate-2 transition-transform duration-700 hover:rotate-0"></div>
           <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-brand-100 rounded-2xl rotate-6 hidden lg:block animate-float" style="animation-delay: 1s"></div>
           <img
-            src="/images/doctor.png"
+            src="/images/patients/2%20landing.jpg"
             alt="Директор клиники"
             class="relative rounded-2xl w-full max-w-lg mx-auto object-cover shadow-2xl shadow-stone-900/10 transition-all duration-700 hover:shadow-3xl hover:shadow-stone-900/15"
           />

@@ -56,11 +56,13 @@
               <input
                 v-model="form.name"
                 :placeholder="t.contacts_name"
+                required
                 class="w-full px-5 py-4 rounded-xl border border-stone-200 text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-all duration-200"
               />
               <input
                 v-model="form.phone"
                 :placeholder="t.contacts_phone_field"
+                required
                 class="w-full px-5 py-4 rounded-xl border border-stone-200 text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-all duration-200"
               />
               <textarea
@@ -69,10 +71,13 @@
                 rows="5"
                 class="w-full px-5 py-4 rounded-xl border border-stone-200 text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-all duration-200 resize-none"
               ></textarea>
-              <button type="submit"
-                class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-600/30 active:translate-y-0">
-                {{ t.contacts_send }}
+              <button type="submit" :disabled="sending"
+                class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-600/30 active:translate-y-0 disabled:opacity-70 disabled:cursor-not-allowed">
+                {{ sending ? t.contacts_sending : t.contacts_send }}
               </button>
+              <p v-if="statusMessage" class="text-sm" :class="statusOk ? 'text-emerald-600' : 'text-red-500'">
+                {{ statusMessage }}
+              </p>
             </form>
           </div>
 
@@ -187,10 +192,10 @@
           <div class="md:col-span-2">
             <div class="flex items-center gap-3 mb-5">
               <div class="w-10 h-10 rounded-xl bg-white border border-stone-200 flex items-center justify-center overflow-hidden">
-                <img src="/images/patients/logo.png" alt="Soglom Turmush logotipi" class="w-full h-full object-contain p-0.5" />
+                <img src="/images/patients/new-logo.jpg" alt="JALILOV logotipi" class="w-full h-full object-contain p-0.5" />
               </div>
               <div>
-                <span class="text-lg font-bold tracking-tight">Soglom Turmush</span>
+                <span class="text-lg font-bold tracking-tight">JALILOV</span>
                 <span class="block text-[10px] font-medium tracking-widest uppercase text-brand-400">{{ t.footer_trich }}</span>
               </div>
             </div>
@@ -241,17 +246,38 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import axios from 'axios'
 import { useLangStore } from '../stores/lang'
 
 const langStore = useLangStore()
 const t = computed(() => langStore.t)
 
 const form = ref({ name: '', phone: '', message: '' })
+const sending = ref(false)
+const statusMessage = ref('')
+const statusOk = ref(false)
 
-function sendMessage() {
+async function sendMessage() {
   if (!form.value.name || !form.value.phone) return
-  const msg = `Имя: ${form.value.name}\nТелефон: ${form.value.phone}\nСообщение: ${form.value.message}`
-  window.open(`https://t.me/+998901475130?text=${encodeURIComponent(msg)}`, '_blank')
-  form.value = { name: '', phone: '', message: '' }
+
+  sending.value = true
+  statusMessage.value = ''
+
+  try {
+    await axios.post('/api/contact', {
+      name: form.value.name,
+      phone: form.value.phone,
+      message: form.value.message,
+    })
+
+    statusOk.value = true
+    statusMessage.value = t.value.contacts_success
+    form.value = { name: '', phone: '', message: '' }
+  } catch (e) {
+    statusOk.value = false
+    statusMessage.value = e.response?.data?.error || t.value.contacts_error
+  } finally {
+    sending.value = false
+  }
 }
 </script>

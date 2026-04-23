@@ -66,6 +66,8 @@ func main() {
 			products.GET("/:id", handlers.GetProduct)
 		}
 
+		api.POST("/contact", handlers.SendContactMessage)
+
 		orders := api.Group("/orders")
 		orders.Use(middleware.UserAuth())
 		{

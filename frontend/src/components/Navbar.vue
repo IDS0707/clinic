@@ -1,15 +1,15 @@
 <template>
-  <nav class="fixed top-0 inset-x-0 z-40 transition-all duration-500"
+  <nav class="relative z-40 transition-all duration-500"
        :class="scrolled ? 'bg-white/95 backdrop-blur-2xl shadow-lg shadow-stone-900/[0.04] border-b border-stone-200/50' : 'bg-surface/80 backdrop-blur-xl'">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-[72px]">
         <!-- Logo -->
         <router-link to="/" class="flex items-center gap-3 group">
           <div class="w-10 h-10 rounded-xl bg-white border border-stone-200 flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300 overflow-hidden">
-            <img src="/images/patients/logo.png" alt="Soglom Turmush logotipi" class="w-full h-full object-contain p-0.5" />
+            <img src="/images/patients/new-logo.jpg" alt="JALILOV logotipi" class="w-full h-full object-contain p-0.5" />
           </div>
           <div class="leading-tight">
-            <span class="text-lg font-bold tracking-tight text-stone-900 group-hover:text-brand-700 transition-colors duration-300">Soglom Turmush</span>
+            <span class="text-lg font-bold tracking-tight text-stone-900 group-hover:text-brand-700 transition-colors duration-300">JALILOV</span>
             <span class="block text-[10px] font-medium tracking-widest uppercase text-brand-600">{{ t.footer_trich }}</span>
           </div>
         </router-link>

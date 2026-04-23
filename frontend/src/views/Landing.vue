@@ -10,7 +10,7 @@
       <div class="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-500/20 rounded-full -translate-y-1/4 translate-x-1/4 animate-pulse-soft"></div>
       <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-600/20 rounded-full translate-y-1/4 -translate-x-1/4 animate-pulse-soft" style="animation-delay: 1.5s"></div>
 
-      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 md:pt-40 md:pb-32 w-full">
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 md:pt-24 md:pb-32 w-full">
         <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
           <!-- LEFT: Text -->
           <div>
@@ -115,28 +115,36 @@
         <p class="text-stone-500 text-lg max-w-xl mx-auto">{{ t.patients_subtitle }}</p>
       </div>
 
-      <!-- Carousel -->
+      <!-- Drag-scroll gallery -->
       <div class="relative overflow-hidden">
         <!-- Left gradient fade -->
-        <div class="absolute left-0 top-0 bottom-0 w-28 lg:w-48 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute left-0 top-0 bottom-0 w-16 lg:w-28 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none"></div>
         <!-- Right gradient fade -->
-        <div class="absolute right-0 top-0 bottom-0 w-28 lg:w-48 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-16 lg:w-28 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none"></div>
 
-        <!-- Scrolling track — photos duplicated for seamless infinite loop -->
-        <div class="flex gap-5 animate-infinite-scroll hover:[animation-play-state:paused]" style="width: max-content">
-          <template v-for="rep in 2" :key="rep">
-            <div
-              v-for="(photo, idx) in patientPhotos"
-              :key="`${rep}-${idx}`"
-              class="shrink-0 w-64 h-80 rounded-2xl overflow-hidden shadow-lg group cursor-pointer"
-            >
-              <img
-                :src="`/images/patients/${photo}`"
-                :alt="`Фото с пациентом ${idx + 1}`"
-                class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
-              />
-            </div>
-          </template>
+        <div
+          ref="patientsScroller"
+          class="flex gap-5 overflow-x-auto px-3 sm:px-6 pb-4 snap-x snap-mandatory cursor-grab active:cursor-grabbing select-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          @mousedown="onDragStart"
+          @mousemove="onDragMove"
+          @mouseup="onDragEnd"
+          @mouseleave="onDragEnd"
+          @touchstart="onDragStart"
+          @touchmove="onDragMove"
+          @touchend="onDragEnd"
+        >
+          <div
+            v-for="(photo, idx) in patientPhotos"
+            :key="photo"
+            class="snap-start shrink-0 w-64 h-80 rounded-2xl overflow-hidden shadow-lg group cursor-pointer"
+          >
+            <img
+              :src="`/images/patients/${photo}`"
+              :alt="`Фото с пациентом ${idx + 1}`"
+              class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+              draggable="false"
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -274,6 +282,13 @@ const patientPhotos = [
 const productsHeader = ref(null)
 const ctaSection = ref(null)
 const productRefs = ref({})
+const patientsScroller = ref(null)
+
+const dragState = {
+  active: false,
+  startX: 0,
+  scrollLeft: 0,
+}
 
 let observer = null
 
@@ -317,6 +332,30 @@ onMounted(async () => {
 onUnmounted(() => {
   if (observer) observer.disconnect()
 })
+
+function getClientX(event) {
+  if ('touches' in event && event.touches.length > 0) return event.touches[0].clientX
+  if ('changedTouches' in event && event.changedTouches.length > 0) return event.changedTouches[0].clientX
+  return event.clientX
+}
+
+function onDragStart(event) {
+  if (!patientsScroller.value) return
+  dragState.active = true
+  dragState.startX = getClientX(event)
+  dragState.scrollLeft = patientsScroller.value.scrollLeft
+}
+
+function onDragMove(event) {
+  if (!dragState.active || !patientsScroller.value) return
+  const currentX = getClientX(event)
+  const walk = currentX - dragState.startX
+  patientsScroller.value.scrollLeft = dragState.scrollLeft - walk
+}
+
+function onDragEnd() {
+  dragState.active = false
+}
 
 async function placeOrder() {
   try {

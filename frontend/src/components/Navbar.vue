@@ -14,7 +14,7 @@
           </div>
         </router-link>
 
-        <!-- Center nav -->
+        <!-- Center nav (desktop) -->
         <div class="hidden md:flex items-center gap-1">
           <a href="#doctor" class="relative text-sm font-medium text-stone-500 hover:text-brand-700 px-4 py-2 rounded-xl hover:bg-brand-50/60 transition-all duration-300 group">
             {{ t.nav_specialist }}
@@ -82,11 +82,72 @@
               {{ t.nav_login }}
             </router-link>
             <router-link to="/register"
-                         class="text-sm font-semibold px-5 py-2.5 rounded-xl bg-brand-700 text-white hover:bg-brand-800 hover:shadow-lg hover:shadow-brand-700/20 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 shadow-sm shadow-brand-700/20">
+                         class="hidden sm:block text-sm font-semibold px-5 py-2.5 rounded-xl bg-brand-700 text-white hover:bg-brand-800 hover:shadow-lg hover:shadow-brand-700/20 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 shadow-sm shadow-brand-700/20">
               {{ t.nav_register }}
             </router-link>
           </template>
+
+          <!-- Hamburger (mobile only) -->
+          <button
+            @click="mobileMenuOpen = !mobileMenuOpen"
+            class="md:hidden p-2.5 rounded-xl text-stone-500 hover:text-brand-700 hover:bg-brand-50/60 transition-all duration-300"
+            :aria-expanded="mobileMenuOpen"
+          >
+            <svg v-if="!mobileMenuOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu dropdown -->
+    <div
+      v-if="mobileMenuOpen"
+      class="md:hidden border-t border-stone-200/50 bg-white/98 backdrop-blur-2xl px-4 py-4 flex flex-col gap-1"
+    >
+      <a href="#doctor" @click="mobileMenuOpen = false"
+         class="text-sm font-medium text-stone-600 hover:text-brand-700 px-4 py-3 rounded-xl hover:bg-brand-50/60 transition-all duration-200">
+        {{ t.nav_specialist }}
+      </a>
+      <a href="#patients" @click="mobileMenuOpen = false"
+         class="text-sm font-medium text-stone-600 hover:text-brand-700 px-4 py-3 rounded-xl hover:bg-brand-50/60 transition-all duration-200">
+        {{ t.nav_patients }}
+      </a>
+      <a href="#products" @click="mobileMenuOpen = false"
+         class="text-sm font-medium text-stone-600 hover:text-brand-700 px-4 py-3 rounded-xl hover:bg-brand-50/60 transition-all duration-200">
+        {{ t.nav_products }}
+      </a>
+      <a href="#contacts" @click="mobileMenuOpen = false"
+         class="text-sm font-medium text-stone-600 hover:text-brand-700 px-4 py-3 rounded-xl hover:bg-brand-50/60 transition-all duration-200">
+        {{ t.nav_contacts }}
+      </a>
+      <div class="border-t border-stone-100 mt-2 pt-3 flex flex-col gap-2">
+        <template v-if="authStore.isLoggedIn">
+          <div class="flex items-center gap-3 px-4 py-2">
+            <div class="w-8 h-8 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center font-semibold text-xs">
+              {{ authStore.user?.first_name?.charAt(0) }}
+            </div>
+            <span class="text-sm font-medium text-stone-700">{{ authStore.user?.first_name }}</span>
+          </div>
+          <button @click="authStore.logout(); mobileMenuOpen = false"
+                  class="text-sm font-medium text-red-500 hover:text-red-600 px-4 py-3 rounded-xl hover:bg-red-50 transition-all duration-200 text-left">
+            {{ t.nav_logout }}
+          </button>
+        </template>
+        <template v-else>
+          <router-link to="/login" @click="mobileMenuOpen = false"
+                       class="text-sm font-medium text-stone-600 hover:text-brand-700 px-4 py-3 rounded-xl hover:bg-brand-50/60 transition-all duration-200">
+            {{ t.nav_login }}
+          </router-link>
+          <router-link to="/register" @click="mobileMenuOpen = false"
+                       class="text-sm font-semibold px-4 py-3 rounded-xl bg-brand-700 text-white hover:bg-brand-800 transition-all duration-200 text-center">
+            {{ t.nav_register }}
+          </router-link>
+        </template>
       </div>
     </div>
   </nav>
@@ -103,9 +164,11 @@ const cartStore = useCartStore()
 const langStore = useLangStore()
 const t = computed(() => langStore.t)
 const scrolled = ref(false)
+const mobileMenuOpen = ref(false)
 
 function handleScroll() {
   scrolled.value = window.scrollY > 40
+  if (mobileMenuOpen.value) mobileMenuOpen.value = false
 }
 
 onMounted(() => {
@@ -117,3 +180,4 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 </script>
+

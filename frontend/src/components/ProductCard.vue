@@ -1,7 +1,7 @@
 <template>
-  <div class="group bg-white rounded-2xl overflow-hidden card-hover border border-stone-100/80 hover:border-brand-200/50">
+  <div class="group bg-white rounded-2xl overflow-hidden card-hover border border-stone-100/80 hover:border-brand-200/50 flex flex-col">
     <!-- Image -->
-    <div class="aspect-[4/3] bg-gradient-to-br from-surface to-stone-100 relative overflow-hidden">
+    <div class="aspect-[4/3] bg-gradient-to-br from-surface to-stone-100 relative overflow-hidden shrink-0">
       <img
         v-if="product.image_path"
         :src="product.image_path"
@@ -21,38 +21,38 @@
     </div>
 
     <!-- Content -->
-    <div class="p-5">
-      <h3 class="font-semibold text-stone-900 text-base mb-1 truncate group-hover:text-brand-700 transition-colors duration-300">{{ product.name }}</h3>
-      <p v-if="product.description" class="text-stone-400 text-sm mb-2 line-clamp-3 leading-relaxed">{{ shortDescription }}</p>
+    <div class="p-3 sm:p-5 flex flex-col flex-1">
+      <h3 class="font-semibold text-stone-900 text-sm sm:text-base mb-1 truncate group-hover:text-brand-700 transition-colors duration-300">{{ product.name }}</h3>
+      <p v-if="product.description" class="text-stone-400 text-xs sm:text-sm mb-2 line-clamp-2 sm:line-clamp-3 leading-relaxed">{{ shortDescription }}</p>
       <button
         v-if="isDescriptionLong"
         @click="openDescription"
-        class="text-xs font-semibold text-brand-700 hover:text-brand-800 mb-4"
+        class="text-xs font-semibold text-brand-700 hover:text-brand-800 mb-3 text-left"
       >
         {{ t.product_read_more }}
       </button>
 
       <!-- Prices -->
-      <div class="space-y-2 mb-5">
+      <div class="space-y-1 sm:space-y-2 mb-3 sm:mb-5 mt-auto">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-medium text-stone-400 uppercase tracking-wide">{{ t.product_one_pill }}</span>
-          <span class="text-sm font-semibold text-stone-600">{{ formatPrice(product.price_per_pill) }} {{ t.currency }}</span>
+          <span class="text-[10px] sm:text-xs font-medium text-stone-400 uppercase tracking-wide">{{ t.product_one_pill }}</span>
+          <span class="text-xs sm:text-sm font-semibold text-stone-600">{{ formatPrice(product.price_per_pill) }} {{ t.currency }}</span>
         </div>
         <div class="flex items-center justify-between">
-          <span class="text-xs font-medium text-stone-400 uppercase tracking-wide">{{ t.product_pack }} <span class="normal-case">({{ product.quantity_per_pack }} {{ t.unit_piece }})</span></span>
-          <span class="text-lg font-bold text-brand-700">{{ formatPrice(product.price_per_pack) }} {{ t.currency }}</span>
+          <span class="text-[10px] sm:text-xs font-medium text-stone-400 uppercase tracking-wide leading-tight">{{ t.product_pack }} <span class="normal-case">({{ product.quantity_per_pack }} {{ t.unit_piece }})</span></span>
+          <span class="text-sm sm:text-lg font-bold text-brand-700">{{ formatPrice(product.price_per_pack) }} {{ t.currency }}</span>
         </div>
       </div>
 
       <!-- Add to cart -->
       <button
         @click="$emit('add-to-cart', product)"
-        class="w-full bg-brand-700 text-white py-3 rounded-xl hover:bg-brand-800 hover:shadow-xl hover:shadow-brand-700/20 hover:-translate-y-0.5
+        class="w-full bg-brand-700 text-white py-2 sm:py-3 rounded-xl hover:bg-brand-800 hover:shadow-xl hover:shadow-brand-700/20 hover:-translate-y-0.5
                active:scale-[0.97] active:translate-y-0
-               transition-all duration-300 ease-out font-medium flex items-center justify-center gap-2
-               shadow-lg shadow-brand-700/15 group/btn"
+               transition-all duration-300 ease-out font-medium flex items-center justify-center gap-1 sm:gap-2
+               shadow-lg shadow-brand-700/15 group/btn text-xs sm:text-sm mt-auto"
       >
-        <svg class="w-5 h-5 group-hover/btn:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5 group-hover/btn:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
         </svg>
         {{ t.add_to_cart }}

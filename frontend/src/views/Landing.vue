@@ -168,7 +168,7 @@
           <p class="text-stone-400 text-lg font-medium">{{ t.products_empty }}</p>
         </div>
 
-        <div v-else class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 stagger-children">
+        <div v-else class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 stagger-children">
           <ProductCard
             v-for="(product, index) in products"
             :key="product.id"

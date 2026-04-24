@@ -126,7 +126,7 @@
           ref="patientsScroller"
           class="overflow-x-auto px-3 sm:px-6 pb-4 cursor-grab active:cursor-grabbing select-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           @wheel.passive="pauseAutoScroll"
-          @scroll.passive="pauseAutoScroll"
+          @scroll.passive="handleInfiniteScroll"
           @mousedown="onDragStart"
           @mousemove="onDragMove"
           @mouseup="onDragEnd"
@@ -329,6 +329,18 @@ function pauseAutoScroll() {
   autoScrollResumeTimer = setTimeout(() => {
     autoScrollPaused.value = false
   }, AUTO_SCROLL_PAUSE_MS)
+}
+
+function handleInfiniteScroll() {
+  const scroller = patientsScroller.value
+  if (!scroller) return
+
+  const loopWidth = scroller.scrollWidth / 2
+  if (loopWidth <= 0) return
+
+  if (scroller.scrollLeft >= loopWidth) {
+    scroller.scrollLeft -= loopWidth
+  }
 }
 
 function setupObserver() {

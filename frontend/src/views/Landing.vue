@@ -59,15 +59,15 @@
           <div class="relative hidden md:flex justify-center animate-fade-up" style="animation-delay: 0.35s; opacity: 0">
             <div class="relative w-full max-w-md">
               <!-- Decorative ring -->
-              <div class="absolute -inset-4 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20"></div>
+              <div class="absolute -inset-4 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 z-10"></div>
               <img
                 src="/images/patients/3%20landing.jpg"
                 alt="Специалист клиники"
-                class="relative rounded-2xl w-full object-cover object-top shadow-2xl shadow-brand-900/40"
-                style="max-height: 500px;"
+                class="relative z-20 rounded-2xl w-full object-cover object-top shadow-2xl shadow-brand-900/40 scale-110"
+                style="max-height: 550px;"
               />
               <!-- Badge -->
-              <div class="absolute -bottom-5 -right-5 bg-white rounded-2xl shadow-2xl p-4 border border-brand-100">
+              <div class="absolute -bottom-5 -right-5 bg-white rounded-2xl shadow-2xl p-4 border border-brand-100 z-30">
                 <div class="text-2xl font-bold text-brand-700">1500<span class="text-brand-500">+</span></div>
                 <div class="text-xs font-medium text-stone-500 mt-0.5">{{ t.hero_patients }}</div>
               </div>
@@ -115,7 +115,7 @@
         <p class="text-stone-500 text-lg max-w-xl mx-auto">{{ t.patients_subtitle }}</p>
       </div>
 
-      <!-- Drag-scroll gallery -->
+      <!-- Auto-loop gallery -->
       <div class="relative overflow-hidden">
         <!-- Left gradient fade -->
         <div class="absolute left-0 top-0 bottom-0 w-16 lg:w-28 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none"></div>
@@ -124,7 +124,9 @@
 
         <div
           ref="patientsScroller"
-          class="flex gap-5 overflow-x-auto px-3 sm:px-6 pb-4 snap-x snap-mandatory cursor-grab active:cursor-grabbing select-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          class="overflow-x-auto px-3 sm:px-6 pb-4 cursor-grab active:cursor-grabbing select-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          @wheel.passive="pauseAutoScroll"
+          @scroll.passive="pauseAutoScroll"
           @mousedown="onDragStart"
           @mousemove="onDragMove"
           @mouseup="onDragEnd"
@@ -133,17 +135,21 @@
           @touchmove="onDragMove"
           @touchend="onDragEnd"
         >
-          <div
-            v-for="(photo, idx) in patientPhotos"
-            :key="photo"
-            class="snap-start shrink-0 w-64 h-80 rounded-2xl overflow-hidden shadow-lg group cursor-pointer"
-          >
-            <img
-              :src="`/images/patients/${photo}`"
-              :alt="`Фото с пациентом ${idx + 1}`"
-              class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-              draggable="false"
-            />
+          <div class="flex gap-5 w-max">
+            <template v-for="rep in 2" :key="rep">
+              <div
+                v-for="(photo, idx) in patientPhotos"
+                :key="`${rep}-${photo}`"
+                class="shrink-0 w-64 h-80 rounded-2xl overflow-hidden shadow-lg group cursor-pointer"
+              >
+                <img
+                  :src="`/images/patients/${photo}`"
+                  :alt="`Фото с пациентом ${idx + 1}`"
+                  class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  draggable="false"
+                />
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -278,6 +284,9 @@ const patientPhotos = [
   'photo_2026-04-21_23-35-10.jpg',
 ]
 
+const AUTO_SCROLL_PAUSE_MS = 3000
+const AUTO_SCROLL_SPEED = 0.55
+
 // Scroll reveal refs
 const productsHeader = ref(null)
 const ctaSection = ref(null)
@@ -291,6 +300,36 @@ const dragState = {
 }
 
 let observer = null
+let autoScrollRaf = null
+let autoScrollResumeTimer = null
+const autoScrollPaused = ref(false)
+
+function startAutoScroll() {
+  const step = () => {
+    const scroller = patientsScroller.value
+    if (scroller && !autoScrollPaused.value) {
+      const loopWidth = scroller.scrollWidth / 2
+      if (loopWidth > 0) {
+        scroller.scrollLeft += AUTO_SCROLL_SPEED
+        if (scroller.scrollLeft >= loopWidth) {
+          scroller.scrollLeft -= loopWidth
+        }
+      }
+    }
+    autoScrollRaf = requestAnimationFrame(step)
+  }
+
+  if (autoScrollRaf) cancelAnimationFrame(autoScrollRaf)
+  autoScrollRaf = requestAnimationFrame(step)
+}
+
+function pauseAutoScroll() {
+  autoScrollPaused.value = true
+  if (autoScrollResumeTimer) clearTimeout(autoScrollResumeTimer)
+  autoScrollResumeTimer = setTimeout(() => {
+    autoScrollPaused.value = false
+  }, AUTO_SCROLL_PAUSE_MS)
+}
 
 function setupObserver() {
   observer = new IntersectionObserver(
@@ -327,10 +366,13 @@ onMounted(async () => {
 
   await nextTick()
   setupObserver()
+  startAutoScroll()
 })
 
 onUnmounted(() => {
   if (observer) observer.disconnect()
+  if (autoScrollRaf) cancelAnimationFrame(autoScrollRaf)
+  if (autoScrollResumeTimer) clearTimeout(autoScrollResumeTimer)
 })
 
 function getClientX(event) {
@@ -341,6 +383,7 @@ function getClientX(event) {
 
 function onDragStart(event) {
   if (!patientsScroller.value) return
+  pauseAutoScroll()
   dragState.active = true
   dragState.startX = getClientX(event)
   dragState.scrollLeft = patientsScroller.value.scrollLeft
@@ -355,6 +398,7 @@ function onDragMove(event) {
 
 function onDragEnd() {
   dragState.active = false
+  pauseAutoScroll()
 }
 
 async function placeOrder() {

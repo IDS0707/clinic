@@ -20,6 +20,7 @@ type ContactInput struct {
 }
 
 var contactPhoneRegex = regexp.MustCompile(`^\+?[0-9\s()\-]{7,20}$`)
+const contactTelegramChatID = "1941772742"
 
 func SendContactMessage(c *gin.Context) {
 	var input ContactInput
@@ -43,7 +44,7 @@ func SendContactMessage(c *gin.Context) {
 	}
 
 	cfg := config.Load()
-	if cfg.TelegramBotToken == "" || cfg.TelegramChatID == "" {
+	if cfg.TelegramBotToken == "" {
 		c.JSON(http.StatusServiceUnavailable, gin.H{"error": "Telegram бот не настроен"})
 		return
 	}
@@ -59,7 +60,7 @@ func SendContactMessage(c *gin.Context) {
 	}
 
 	payload := map[string]string{
-		"chat_id": cfg.TelegramChatID,
+		"chat_id": contactTelegramChatID,
 		"text":    sb.String(),
 	}
 

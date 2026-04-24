@@ -192,10 +192,10 @@
           <div class="md:col-span-2">
             <div class="flex items-center gap-3 mb-5">
               <div class="w-10 h-10 rounded-xl bg-white border border-stone-200 flex items-center justify-center overflow-hidden">
-                <img src="/images/patients/new-logo.jpg" alt="JALILOV logotipi" class="w-full h-full object-contain p-0.5" />
+                <img src="/images/patients/Jalilov.jpg" alt="Doctor Jalilov logotipi" class="w-full h-full object-contain p-0.5" />
               </div>
               <div>
-                <span class="text-lg font-bold tracking-tight">JALILOV</span>
+                <span class="text-lg font-bold tracking-tight">Doctor Jalilov</span>
                 <span class="block text-[10px] font-medium tracking-widest uppercase text-brand-400">{{ t.footer_trich }}</span>
               </div>
             </div>

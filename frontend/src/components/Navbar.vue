@@ -6,10 +6,10 @@
         <!-- Logo -->
         <router-link to="/" class="flex items-center gap-3 group">
           <div class="w-10 h-10 rounded-xl bg-white border border-stone-200 flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300 overflow-hidden">
-            <img src="/images/patients/new-logo.jpg" alt="JALILOV logotipi" class="w-full h-full object-contain p-0.5" />
+            <img src="/images/patients/Jalilov.jpg" alt="Doctor Jalilov logotipi" class="w-full h-full object-contain p-0.5" />
           </div>
           <div class="leading-tight">
-            <span class="text-lg font-bold tracking-tight text-stone-900 group-hover:text-brand-700 transition-colors duration-300">JALILOV</span>
+            <span class="text-lg font-bold tracking-tight text-stone-900 group-hover:text-brand-700 transition-colors duration-300">Doctor Jalilov</span>
             <span class="block text-[10px] font-medium tracking-widest uppercase text-brand-600">{{ t.footer_trich }}</span>
           </div>
         </router-link>

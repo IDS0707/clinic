@@ -214,26 +214,18 @@
           </div>
 
           <div class="lg:col-span-2">
-            <h4 class="text-xs font-semibold tracking-widest uppercase text-white/60 mb-5">{{ t.footer_faq }}</h4>
-            <div class="space-y-2">
-              <div v-for="faq in faqs" :key="faq.id" class="rounded-xl border border-white/10 bg-white/[0.03] overflow-hidden">
-                <button
-                  @click="toggleFaq(faq.id)"
-                  class="w-full px-4 py-3 text-left text-sm font-medium text-white/90 hover:text-white hover:bg-white/5 transition flex items-center justify-between"
-                >
-                  <span>{{ faq.question }}</span>
-                  <svg class="w-4 h-4 text-brand-300 transition-transform" :class="openedFaqId === faq.id ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                <div v-if="openedFaqId === faq.id" class="px-4 pb-3 text-sm text-white/60 leading-relaxed space-y-2">
-                  <p v-for="answer in faq.answers" :key="answer.id">{{ answer.text }}</p>
-                </div>
-              </div>
-
-              <div v-if="faqs.length === 0" class="text-sm text-white/35 border border-dashed border-white/10 rounded-xl px-4 py-6">
-                {{ t.footer_faq_empty }}
-              </div>
+            <h4 class="text-xs font-semibold tracking-widest uppercase text-white/60 mb-5">{{ t.footer_support_title }}</h4>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="text-sm text-white/55 leading-relaxed mb-4">{{ t.footer_support_desc }}</p>
+              <router-link
+                to="/support"
+                class="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-all duration-300"
+              >
+                {{ t.nav_support }}
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </router-link>
             </div>
           </div>
 
@@ -264,7 +256,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import axios from 'axios'
 import { useLangStore } from '../stores/lang'
 
@@ -275,21 +267,6 @@ const form = ref({ name: '', phone: '', message: '' })
 const sending = ref(false)
 const statusMessage = ref('')
 const statusOk = ref(false)
-const faqs = ref([])
-const openedFaqId = ref(null)
-
-async function loadFaqs() {
-  try {
-    const res = await axios.get('/api/faqs')
-    faqs.value = res.data || []
-  } catch (e) {
-    faqs.value = []
-  }
-}
-
-function toggleFaq(id) {
-  openedFaqId.value = openedFaqId.value === id ? null : id
-}
 
 async function sendMessage() {
   if (!form.value.name || !form.value.phone) return
@@ -314,8 +291,4 @@ async function sendMessage() {
     sending.value = false
   }
 }
-
-onMounted(() => {
-  loadFaqs()
-})
 </script>

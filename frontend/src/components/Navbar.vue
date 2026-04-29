@@ -32,6 +32,10 @@
             {{ t.nav_contacts }}
             <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-brand-500 rounded-full group-hover:w-5 transition-all duration-300"></span>
           </a>
+          <router-link to="/support" class="relative text-sm font-medium text-stone-500 hover:text-brand-700 px-4 py-2 rounded-xl hover:bg-brand-50/60 transition-all duration-300 group">
+            {{ t.nav_support }}
+            <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-brand-500 rounded-full group-hover:w-5 transition-all duration-300"></span>
+          </router-link>
         </div>
 
         <!-- Right side -->
@@ -125,6 +129,10 @@
          class="text-sm font-medium text-stone-600 hover:text-brand-700 px-4 py-3 rounded-xl hover:bg-brand-50/60 transition-all duration-200">
         {{ t.nav_contacts }}
       </a>
+      <router-link to="/support" @click="mobileMenuOpen = false"
+                   class="text-sm font-medium text-stone-600 hover:text-brand-700 px-4 py-3 rounded-xl hover:bg-brand-50/60 transition-all duration-200">
+        {{ t.nav_support }}
+      </router-link>
       <div class="border-t border-stone-100 mt-2 pt-3 flex flex-col gap-2">
         <template v-if="authStore.isLoggedIn">
           <div class="flex items-center gap-3 px-4 py-2">

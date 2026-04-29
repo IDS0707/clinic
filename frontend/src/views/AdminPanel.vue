@@ -312,6 +312,83 @@
         </div>
       </div>
 
+      <div v-if="activeTab === 'support'">
+        <div class="grid lg:grid-cols-5 gap-6">
+          <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-4 sm:p-5">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Обращения пользователей</h2>
+
+            <div v-if="supportLoading" class="text-sm text-gray-400">Загрузка...</div>
+
+            <div v-else class="space-y-2 max-h-[72vh] overflow-y-auto pr-1">
+              <button
+                v-for="thread in supportThreads"
+                :key="thread.id"
+                @click="openSupportThread(thread.id)"
+                class="w-full text-left p-3 rounded-xl border transition"
+                :class="selectedThread?.id === thread.id ? 'border-teal-500 bg-teal-50' : 'border-gray-200 hover:bg-gray-50'"
+              >
+                <div class="font-semibold text-gray-800 truncate">{{ thread.user?.first_name }} {{ thread.user?.last_name }}</div>
+                <div class="text-xs text-gray-500 truncate mt-1">+{{ thread.user?.phone }}</div>
+                <div class="text-xs text-gray-400 truncate mt-1">{{ supportThreadPreview(thread) }}</div>
+                <div class="text-[10px] text-gray-400 mt-1">{{ supportThreadTime(thread) }}</div>
+              </button>
+
+              <div v-if="supportThreads.length === 0" class="text-sm text-gray-400 border border-dashed border-gray-200 rounded-xl p-6 text-center">
+                Пока нет обращений
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-3 bg-white rounded-xl shadow-sm flex flex-col h-[78vh]">
+            <div class="px-5 py-4 border-b border-gray-200" v-if="selectedThread">
+              <h3 class="font-bold text-gray-800">{{ selectedThread.user?.first_name }} {{ selectedThread.user?.last_name }}</h3>
+              <p class="text-sm text-gray-500">+{{ selectedThread.user?.phone }}</p>
+            </div>
+
+            <div class="flex-1 overflow-y-auto px-5 py-4 bg-gray-50/70 space-y-3">
+              <template v-if="selectedThread">
+                <div
+                  v-for="msg in selectedThread.messages"
+                  :key="msg.id"
+                  class="flex"
+                  :class="msg.sender_role === 'admin' ? 'justify-end' : 'justify-start'"
+                >
+                  <div
+                    class="max-w-[78%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed shadow-sm"
+                    :class="msg.sender_role === 'admin' ? 'bg-teal-600 text-white rounded-br-md' : 'bg-white text-gray-700 border border-gray-200 rounded-bl-md'"
+                  >
+                    <p class="whitespace-pre-line">{{ msg.message }}</p>
+                    <p class="text-[10px] mt-1 opacity-70">{{ new Date(msg.created_at).toLocaleString('ru-RU') }}</p>
+                  </div>
+                </div>
+              </template>
+
+              <div v-else class="h-full flex items-center justify-center text-sm text-gray-400">
+                Выберите диалог слева
+              </div>
+            </div>
+
+            <form @submit.prevent="sendSupportReply" class="p-4 border-t border-gray-200 bg-white" v-if="selectedThread">
+              <div class="flex gap-3 items-end">
+                <textarea
+                  v-model="supportReply"
+                  rows="2"
+                  placeholder="Напишите ответ пользователю..."
+                  class="flex-1 border border-gray-300 rounded-xl px-3 py-2.5 resize-none focus:outline-none focus:ring-2 focus:ring-teal-500"
+                ></textarea>
+                <button
+                  type="submit"
+                  :disabled="supportSending || !supportReply.trim()"
+                  class="bg-teal-600 text-white px-5 py-2.5 rounded-xl hover:bg-teal-700 transition disabled:opacity-50"
+                >
+                  {{ supportSending ? 'Отправка...' : 'Ответить' }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
       <!-- ===== Settings Tab ===== -->
       <div v-if="activeTab === 'settings'">
         <h2 class="text-2xl font-bold text-gray-800 mb-6">Настройки</h2>
@@ -492,6 +569,7 @@ const tabs = [
   { id: 'orders', label: 'Заказы' },
   { id: 'workers', label: 'Работники' },
   { id: 'faq', label: 'FAQ' },
+  { id: 'support', label: 'Поддержка' },
   { id: 'settings', label: 'Настройки' },
 ]
 
@@ -529,6 +607,13 @@ const editingFaqId = ref(null)
 const savingFaq = ref(false)
 const faqError = ref('')
 const expandedFaqId = ref(null)
+
+// Support
+const supportThreads = ref([])
+const selectedThread = ref(null)
+const supportReply = ref('')
+const supportSending = ref(false)
+const supportLoading = ref(false)
 
 // Settings
 const settings = reactive({ phone: '', old_password: '', new_password: '' })
@@ -670,6 +755,59 @@ async function deleteFaq(id) {
     await loadFaqs()
   } catch (e) {
     alert('Ошибка при удалении FAQ')
+  }
+}
+
+function supportThreadPreview(thread) {
+  const last = thread.messages?.[0]
+  return last?.message || 'Нет сообщений'
+}
+
+function supportThreadTime(thread) {
+  const last = thread.messages?.[0]
+  const date = last?.created_at || thread.updated_at
+  if (!date) return ''
+  return new Date(date).toLocaleString('ru-RU')
+}
+
+async function loadSupportThreads() {
+  supportLoading.value = true
+  try {
+    const res = await api.get('/admin/support/threads')
+    supportThreads.value = res.data || []
+    if (!selectedThread.value && supportThreads.value.length > 0) {
+      await openSupportThread(supportThreads.value[0].id)
+    }
+  } catch (e) {
+    console.error(e)
+  } finally {
+    supportLoading.value = false
+  }
+}
+
+async function openSupportThread(id) {
+  try {
+    const res = await api.get(`/admin/support/threads/${id}`)
+    selectedThread.value = res.data
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+async function sendSupportReply() {
+  const message = supportReply.value.trim()
+  if (!message || !selectedThread.value) return
+
+  supportSending.value = true
+  try {
+    await api.post(`/admin/support/threads/${selectedThread.value.id}/reply`, { message })
+    supportReply.value = ''
+    await openSupportThread(selectedThread.value.id)
+    await loadSupportThreads()
+  } catch (e) {
+    alert(e.response?.data?.error || 'Ошибка при отправке ответа')
+  } finally {
+    supportSending.value = false
   }
 }
 
@@ -844,5 +982,6 @@ onMounted(() => {
   loadProfile()
   loadWorkers()
   loadFaqs()
+  loadSupportThreads()
 })
 </script>

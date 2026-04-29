@@ -61,6 +61,9 @@ func main() {
 				protected.POST("/faqs", handlers.CreateFAQ)
 				protected.PUT("/faqs/:id", handlers.UpdateFAQ)
 				protected.DELETE("/faqs/:id", handlers.DeleteFAQ)
+				protected.GET("/support/threads", handlers.GetSupportThreads)
+				protected.GET("/support/threads/:id", handlers.GetSupportThreadByID)
+				protected.POST("/support/threads/:id/reply", handlers.ReplySupportThread)
 			}
 		}
 
@@ -79,6 +82,13 @@ func main() {
 		{
 			orders.POST("", handlers.CreateOrder)
 			orders.GET("", handlers.GetUserOrders)
+		}
+
+		support := api.Group("/support")
+		support.Use(middleware.UserAuth())
+		{
+			support.GET("/thread", handlers.GetUserSupportThread)
+			support.POST("/messages", handlers.SendUserSupportMessage)
 		}
 
 		pickup := api.Group("/pickup")

@@ -57,12 +57,13 @@
     </div>
 
     <!-- Mini panel with full description -->
-    <div
-      v-if="isDescriptionOpen"
-      class="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4"
-      @click.self="closeDescription"
-    >
-      <div class="w-[96vw] h-[92vh] bg-white rounded-3xl shadow-2xl border border-stone-100 p-4 sm:p-6 lg:p-8 overflow-hidden">
+    <Teleport to="body">
+      <div
+        v-if="isDescriptionOpen"
+        class="fixed inset-0 z-[100] bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4"
+        @click.self="closeDescription"
+      >
+        <div class="w-[96vw] h-[92vh] bg-white rounded-3xl shadow-2xl border border-stone-100 p-4 sm:p-6 lg:p-8 overflow-hidden">
         <div class="flex items-start justify-between gap-4 mb-5">
           <h4 class="text-base sm:text-lg font-bold text-stone-900">{{ t.product_description }}</h4>
           <button
@@ -116,7 +117,8 @@
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </Teleport>
   </div>
 </template>
 

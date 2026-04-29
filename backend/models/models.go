@@ -52,6 +52,25 @@ type FAQAnswer struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
+type SupportThread struct {
+	ID        uint             `gorm:"primaryKey" json:"id"`
+	UserID    uint             `gorm:"uniqueIndex;not null" json:"user_id"`
+	User      User             `json:"user"`
+	Messages  []SupportMessage `gorm:"constraint:OnDelete:CASCADE" json:"messages"`
+	CreatedAt time.Time        `json:"created_at"`
+	UpdatedAt time.Time        `json:"updated_at"`
+}
+
+type SupportMessage struct {
+	ID          uint      `gorm:"primaryKey" json:"id"`
+	ThreadID    uint      `gorm:"index;not null" json:"thread_id"`
+	SenderRole  string    `gorm:"not null" json:"sender_role"`
+	Message     string    `gorm:"type:text;not null" json:"message"`
+	ReadByUser  bool      `gorm:"default:false" json:"read_by_user"`
+	ReadByAdmin bool      `gorm:"default:false" json:"read_by_admin"`
+	CreatedAt   time.Time `json:"created_at"`
+}
+
 func (p *Product) ComputePackPrice() {
 	p.PricePerPack = p.PricePerPill * float64(p.QuantityPerPack)
 }

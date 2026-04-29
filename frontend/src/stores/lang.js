@@ -21,6 +21,7 @@ const translations = {
     nav_patients: 'Пациенты',
     nav_products: 'Препараты',
     nav_contacts: 'Контакты',
+    nav_support: 'Поддержка',
     nav_login: 'Войти',
     nav_register: 'Регистрация',
     nav_logout: 'Выйти',
@@ -96,6 +97,18 @@ const translations = {
     contacts_map_subtitle: 'Расположены в городе Андижан',
     contacts_directions: 'Построить маршрут',
 
+    // Support
+    support_title: 'Поддержка',
+    support_subtitle: 'Задайте вопрос нашей команде. Ниже также есть частые вопросы.',
+    support_faq_title: 'Частые вопросы',
+    support_faq_empty: 'Пока нет вопросов',
+    support_chat_title: 'Чат с поддержкой',
+    support_chat_hint: 'Мы отвечаем в рабочее время',
+    support_no_messages: 'Пока нет сообщений',
+    support_input_placeholder: 'Напишите ваш вопрос...',
+    support_send: 'Отправить',
+    support_sending: 'Отправка...',
+
     // Cart
     cart_title: 'Корзина',
     cart_items: 'товаров',
@@ -136,6 +149,8 @@ const translations = {
     footer_holiday: 'Выходной',
     footer_faq: 'Частые вопросы',
     footer_faq_empty: 'Вопросы скоро появятся',
+    footer_support_title: 'Поддержка',
+    footer_support_desc: 'Есть вопрос по лечению или заказу? Откройте поддержку и напишите нам в чат.',
 
     // My orders drawer
     orders_title: 'Мои заказы',
@@ -153,6 +168,7 @@ const translations = {
     nav_patients: 'Bemorlar',
     nav_products: 'Dorilar',
     nav_contacts: 'Aloqa',
+    nav_support: 'Yordam',
     nav_login: 'Kirish',
     nav_register: "Ro'yxatdan o'tish",
     nav_logout: 'Chiqish',
@@ -228,6 +244,18 @@ const translations = {
     contacts_map_subtitle: 'Andijon shahrida joylashgan',
     contacts_directions: "Yo'nalish olish",
 
+    // Support
+    support_title: 'Yordam',
+    support_subtitle: 'Savolingizni yozing. Pastda ko\'p so\'raladigan savollar ham bor.',
+    support_faq_title: 'Ko\'p so\'raladigan savollar',
+    support_faq_empty: 'Savollar hali yo\'q',
+    support_chat_title: 'Yordam bilan chat',
+    support_chat_hint: 'Ish vaqtida javob beramiz',
+    support_no_messages: 'Hozircha xabarlar yo\'q',
+    support_input_placeholder: 'Savolingizni yozing...',
+    support_send: 'Yuborish',
+    support_sending: 'Yuborilmoqda...',
+
     // Cart
     cart_title: 'Savat',
     cart_items: 'mahsulot',
@@ -268,6 +296,8 @@ const translations = {
     footer_holiday: 'Dam olish kuni',
     footer_faq: 'Ko\'p so\'raladigan savollar',
     footer_faq_empty: 'Savollar tez orada qo\'shiladi',
+    footer_support_title: 'Yordam',
+    footer_support_desc: 'Davolanish yoki buyurtma bo\'yicha savol bormi? Yordam chatiga yozing.',
 
     // My orders drawer
     orders_title: 'Mening buyurtmalarim',

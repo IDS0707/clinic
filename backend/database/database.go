@@ -35,6 +35,8 @@ func Migrate() {
 		&models.Product{},
 		&models.FAQ{},
 		&models.FAQAnswer{},
+		&models.SupportThread{},
+		&models.SupportMessage{},
 		&models.Order{},
 		&models.OrderItem{},
 	)

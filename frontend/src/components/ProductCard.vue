@@ -21,16 +21,12 @@
     </div>
 
     <!-- Content -->
-    <div class="p-3 sm:p-5 flex flex-col flex-1">
+    <div
+      class="p-3 sm:p-5 flex flex-col flex-1 cursor-pointer"
+      @click="openDescription"
+    >
       <h3 class="font-semibold text-stone-900 text-sm sm:text-base mb-1 truncate group-hover:text-brand-700 transition-colors duration-300">{{ product.name }}</h3>
-      <p v-if="product.description" class="text-stone-400 text-xs sm:text-sm mb-2 line-clamp-2 sm:line-clamp-3 leading-relaxed">{{ shortDescription }}</p>
-      <button
-        v-if="isDescriptionLong"
-        @click="openDescription"
-        class="text-xs font-semibold text-brand-700 hover:text-brand-800 mb-3 text-left"
-      >
-        {{ t.product_read_more }}
-      </button>
+      <p v-if="product.description" class="text-stone-400 text-xs sm:text-sm mb-3 line-clamp-2 sm:line-clamp-3 leading-relaxed">{{ shortDescription }}</p>
 
       <!-- Prices -->
       <div class="space-y-1 sm:space-y-2 mb-3 sm:mb-5 mt-auto">
@@ -46,6 +42,7 @@
 
       <!-- Add to cart -->
       <button
+        @click.stop
         @click="$emit('add-to-cart', product)"
         class="w-full bg-brand-700 text-white py-2 sm:py-3 rounded-xl hover:bg-brand-800 hover:shadow-xl hover:shadow-brand-700/20 hover:-translate-y-0.5
                active:scale-[0.97] active:translate-y-0
@@ -65,9 +62,9 @@
       class="fixed inset-0 z-50 bg-stone-900/50 backdrop-blur-sm flex items-center justify-center p-4"
       @click.self="closeDescription"
     >
-      <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-stone-100 p-5">
-        <div class="flex items-start justify-between gap-4 mb-4">
-          <h4 class="text-base font-bold text-stone-900">{{ t.product_description }}</h4>
+      <div class="w-full max-w-3xl bg-white rounded-3xl shadow-2xl border border-stone-100 p-4 sm:p-6">
+        <div class="flex items-start justify-between gap-4 mb-5">
+          <h4 class="text-base sm:text-lg font-bold text-stone-900">{{ t.product_description }}</h4>
           <button
             @click="closeDescription"
             class="text-xs font-semibold text-stone-500 hover:text-stone-700"
@@ -75,7 +72,36 @@
             {{ t.product_close }}
           </button>
         </div>
-        <p class="text-sm text-stone-600 leading-relaxed whitespace-pre-line">{{ product.description }}</p>
+
+        <div class="grid md:grid-cols-2 gap-5">
+          <div class="rounded-2xl overflow-hidden bg-stone-100 min-h-56 md:min-h-full">
+            <img
+              v-if="product.image_path"
+              :src="product.image_path"
+              :alt="product.name"
+              class="w-full h-full object-cover"
+            />
+            <div v-else class="w-full h-full min-h-56 flex items-center justify-center text-stone-400 text-sm">
+              {{ t.no_photo }}
+            </div>
+          </div>
+
+          <div class="flex flex-col">
+            <h5 class="text-2xl font-bold text-stone-900 mb-1">{{ product.name }}</h5>
+            <p class="text-brand-700 font-semibold mb-4">{{ formatPrice(product.price_per_pack) }} {{ t.currency }}</p>
+
+            <div class="space-y-2 overflow-hidden">
+              <p
+                v-for="(line, index) in animatedLines"
+                :key="`${index}-${line}`"
+                class="text-sm text-stone-600 leading-relaxed opacity-0 translate-y-2 animate-line-in"
+                :style="{ animationDelay: `${index * 140}ms` }"
+              >
+                {{ line }}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -94,22 +120,36 @@ const props = defineProps({
 
 defineEmits(['add-to-cart'])
 
-const DESCRIPTION_PREVIEW_WORDS = 20
 const isDescriptionOpen = ref(false)
+const animationNonce = ref(0)
 
 const descriptionWords = computed(() => {
   return (props.product.description || '').trim().split(/\s+/).filter(Boolean)
 })
 
-const isDescriptionLong = computed(() => descriptionWords.value.length > DESCRIPTION_PREVIEW_WORDS)
-
 const shortDescription = computed(() => {
+  const DESCRIPTION_PREVIEW_WORDS = 20
   if (!props.product.description) return ''
-  if (!isDescriptionLong.value) return props.product.description
+  if (descriptionWords.value.length <= DESCRIPTION_PREVIEW_WORDS) return props.product.description
   return `${descriptionWords.value.slice(0, DESCRIPTION_PREVIEW_WORDS).join(' ')}...`
 })
 
+const animatedLines = computed(() => {
+  animationNonce.value
+  const text = (props.product.description || '').trim()
+  if (!text) return ['Описание пока не добавлено.']
+
+  const byLine = text.split('\n').map(line => line.trim()).filter(Boolean)
+  if (byLine.length > 1) return byLine
+
+  return text
+    .split(/(?<=[.!?])\s+/)
+    .map(line => line.trim())
+    .filter(Boolean)
+})
+
 function openDescription() {
+  animationNonce.value++
   isDescriptionOpen.value = true
 }
 
@@ -121,3 +161,20 @@ function formatPrice(price) {
   return new Intl.NumberFormat('ru-RU').format(Math.round(price))
 }
 </script>
+
+<style scoped>
+.animate-line-in {
+  animation: lineIn 0.45s ease forwards;
+}
+
+@keyframes lineIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>

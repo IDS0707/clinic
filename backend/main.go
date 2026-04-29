@@ -57,6 +57,10 @@ func main() {
 				protected.GET("/workers", handlers.GetWorkers)
 				protected.POST("/workers", handlers.CreateWorker)
 				protected.DELETE("/workers/:id", handlers.DeleteWorker)
+				protected.GET("/faqs", handlers.GetFAQs)
+				protected.POST("/faqs", handlers.CreateFAQ)
+				protected.PUT("/faqs/:id", handlers.UpdateFAQ)
+				protected.DELETE("/faqs/:id", handlers.DeleteFAQ)
 			}
 		}
 
@@ -65,6 +69,8 @@ func main() {
 			products.GET("", handlers.GetProducts)
 			products.GET("/:id", handlers.GetProduct)
 		}
+
+		api.GET("/faqs", handlers.GetFAQs)
 
 		api.POST("/contact", handlers.SendContactMessage)
 

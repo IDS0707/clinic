@@ -134,6 +134,8 @@ const translations = {
     footer_weekdays: 'Пн — Пт',
     footer_weekends: 'Сб — Вс',
     footer_holiday: 'Выходной',
+    footer_faq: 'Частые вопросы',
+    footer_faq_empty: 'Вопросы скоро появятся',
 
     // My orders drawer
     orders_title: 'Мои заказы',
@@ -264,6 +266,8 @@ const translations = {
     footer_weekdays: 'Du — Ju',
     footer_weekends: 'Sha — Ya',
     footer_holiday: 'Dam olish kuni',
+    footer_faq: 'Ko\'p so\'raladigan savollar',
+    footer_faq_empty: 'Savollar tez orada qo\'shiladi',
 
     // My orders drawer
     orders_title: 'Mening buyurtmalarim',

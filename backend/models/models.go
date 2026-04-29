@@ -36,6 +36,22 @@ type Product struct {
 	CreatedAt       time.Time `json:"created_at"`
 }
 
+type FAQ struct {
+	ID        uint        `gorm:"primaryKey" json:"id"`
+	Question  string      `gorm:"not null" json:"question"`
+	Answers   []FAQAnswer `gorm:"constraint:OnDelete:CASCADE" json:"answers"`
+	CreatedAt time.Time   `json:"created_at"`
+	UpdatedAt time.Time   `json:"updated_at"`
+}
+
+type FAQAnswer struct {
+	ID        uint      `gorm:"primaryKey" json:"id"`
+	FAQID     uint      `gorm:"index;not null" json:"faq_id"`
+	Text      string    `gorm:"not null" json:"text"`
+	Position  int       `gorm:"not null;default:0" json:"position"`
+	CreatedAt time.Time `json:"created_at"`
+}
+
 func (p *Product) ComputePackPrice() {
 	p.PricePerPack = p.PricePerPill * float64(p.QuantityPerPack)
 }

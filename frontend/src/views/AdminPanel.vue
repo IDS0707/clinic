@@ -203,6 +203,116 @@
       </div>
 
       <!-- ===== Settings Tab ===== -->
+      <div v-if="activeTab === 'faq'">
+        <div class="grid lg:grid-cols-2 gap-6">
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-1">Частые вопросы</h2>
+            <p class="text-sm text-gray-500 mb-6">Добавляйте вопросы и несколько ответов для каждого вопроса.</p>
+
+            <form @submit.prevent="saveFaq" class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Вопрос</label>
+                <input
+                  v-model="faqForm.question"
+                  type="text"
+                  placeholder="Например: Как принимать препарат?"
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <label class="block text-sm font-medium text-gray-700">Ответы</label>
+                  <button
+                    type="button"
+                    @click="addFaqAnswerField"
+                    class="text-xs font-semibold text-teal-600 hover:text-teal-700"
+                  >
+                    + Добавить ответ
+                  </button>
+                </div>
+
+                <div class="space-y-2">
+                  <div v-for="(answer, index) in faqForm.answers" :key="index" class="flex gap-2 items-start">
+                    <textarea
+                      v-model="faqForm.answers[index]"
+                      rows="2"
+                      class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                      :placeholder="`Ответ ${index + 1}`"
+                    ></textarea>
+                    <button
+                      type="button"
+                      @click="removeFaqAnswerField(index)"
+                      class="mt-1 text-red-500 hover:text-red-700 p-1"
+                      title="Удалить ответ"
+                    >
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div v-if="faqError" class="bg-red-50 text-red-600 text-sm p-3 rounded-lg">{{ faqError }}</div>
+
+              <div class="flex gap-3">
+                <button
+                  type="submit"
+                  :disabled="savingFaq"
+                  class="bg-teal-600 text-white px-5 py-2.5 rounded-lg hover:bg-teal-700 transition font-medium disabled:opacity-50"
+                >
+                  {{ savingFaq ? 'Сохранение...' : (editingFaqId ? 'Обновить вопрос' : 'Добавить вопрос') }}
+                </button>
+                <button
+                  v-if="editingFaqId"
+                  type="button"
+                  @click="resetFaqForm"
+                  class="border border-gray-300 px-5 py-2.5 rounded-lg hover:bg-gray-50 transition font-medium"
+                >
+                  Отмена
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">Список вопросов</h3>
+            <div class="space-y-3 max-h-[640px] overflow-y-auto pr-1">
+              <div v-for="faq in faqs" :key="faq.id" class="border border-gray-200 rounded-xl overflow-hidden">
+                <button
+                  @click="expandedFaqId = expandedFaqId === faq.id ? null : faq.id"
+                  class="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 transition flex justify-between items-center"
+                >
+                  <span class="font-medium text-gray-800">{{ faq.question }}</span>
+                  <svg class="w-4 h-4 text-gray-500 transition-transform" :class="expandedFaqId === faq.id ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                <div v-if="expandedFaqId === faq.id" class="px-4 py-3 bg-white border-t border-gray-200">
+                  <ol class="space-y-2 mb-4">
+                    <li v-for="answer in faq.answers" :key="answer.id" class="text-sm text-gray-600 leading-relaxed">
+                      • {{ answer.text }}
+                    </li>
+                  </ol>
+                  <div class="flex gap-2">
+                    <button @click="editFaq(faq)" class="text-xs font-semibold text-teal-600 hover:text-teal-700">Редактировать</button>
+                    <button @click="deleteFaq(faq.id)" class="text-xs font-semibold text-red-500 hover:text-red-600">Удалить</button>
+                  </div>
+                </div>
+              </div>
+
+              <div v-if="faqs.length === 0" class="text-sm text-gray-400 py-10 text-center border border-dashed border-gray-200 rounded-xl">
+                Вопросов пока нет
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Settings Tab ===== -->
       <div v-if="activeTab === 'settings'">
         <h2 class="text-2xl font-bold text-gray-800 mb-6">Настройки</h2>
         <div class="bg-white rounded-xl shadow-sm p-6 max-w-lg">
@@ -381,6 +491,7 @@ const tabs = [
   { id: 'products', label: 'Препараты' },
   { id: 'orders', label: 'Заказы' },
   { id: 'workers', label: 'Работники' },
+  { id: 'faq', label: 'FAQ' },
   { id: 'settings', label: 'Настройки' },
 ]
 
@@ -410,6 +521,14 @@ const showWorkerModal = ref(false)
 const workerForm = reactive({ name: '', phoneDigits: '', password: '' })
 const workerError = ref('')
 const savingWorker = ref(false)
+
+// FAQ
+const faqs = ref([])
+const faqForm = reactive({ question: '', answers: [''] })
+const editingFaqId = ref(null)
+const savingFaq = ref(false)
+const faqError = ref('')
+const expandedFaqId = ref(null)
 
 // Settings
 const settings = reactive({ phone: '', old_password: '', new_password: '' })
@@ -479,6 +598,78 @@ async function loadWorkers() {
     workers.value = res.data || []
   } catch (e) {
     console.error(e)
+  }
+}
+
+async function loadFaqs() {
+  try {
+    const res = await api.get('/admin/faqs')
+    faqs.value = res.data || []
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+function resetFaqForm() {
+  editingFaqId.value = null
+  faqForm.question = ''
+  faqForm.answers = ['']
+  faqError.value = ''
+}
+
+function addFaqAnswerField() {
+  faqForm.answers.push('')
+}
+
+function removeFaqAnswerField(index) {
+  if (faqForm.answers.length === 1) {
+    faqForm.answers[0] = ''
+    return
+  }
+  faqForm.answers.splice(index, 1)
+}
+
+function editFaq(faq) {
+  editingFaqId.value = faq.id
+  faqForm.question = faq.question
+  faqForm.answers = (faq.answers || []).map(item => item.text)
+  if (faqForm.answers.length === 0) faqForm.answers = ['']
+  faqError.value = ''
+}
+
+async function saveFaq() {
+  faqError.value = ''
+  savingFaq.value = true
+
+  const payload = {
+    question: faqForm.question,
+    answers: faqForm.answers
+  }
+
+  try {
+    if (editingFaqId.value) {
+      await api.put(`/admin/faqs/${editingFaqId.value}`, payload)
+    } else {
+      await api.post('/admin/faqs', payload)
+    }
+    resetFaqForm()
+    await loadFaqs()
+  } catch (e) {
+    faqError.value = e.response?.data?.error || 'Ошибка при сохранении FAQ'
+  } finally {
+    savingFaq.value = false
+  }
+}
+
+async function deleteFaq(id) {
+  if (!confirm('Удалить этот вопрос?')) return
+  try {
+    await api.delete(`/admin/faqs/${id}`)
+    if (expandedFaqId.value === id) expandedFaqId.value = null
+    if (editingFaqId.value === id) resetFaqForm()
+    await loadFaqs()
+  } catch (e) {
+    alert('Ошибка при удалении FAQ')
   }
 }
 
@@ -652,5 +843,6 @@ onMounted(() => {
   loadOrders()
   loadProfile()
   loadWorkers()
+  loadFaqs()
 })
 </script>

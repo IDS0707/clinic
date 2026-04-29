@@ -33,6 +33,8 @@ func Migrate() {
 		&models.Admin{},
 		&models.Worker{},
 		&models.Product{},
+		&models.FAQ{},
+		&models.FAQAnswer{},
 		&models.Order{},
 		&models.OrderItem{},
 	)

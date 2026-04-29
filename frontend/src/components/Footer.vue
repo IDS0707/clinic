@@ -187,9 +187,8 @@
     <footer class="bg-stone-900 text-white relative overflow-hidden">
       <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-px bg-gradient-to-r from-transparent via-brand-600/30 to-transparent"></div>
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
-        <div class="grid md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
-          <!-- Brand -->
-          <div class="md:col-span-2">
+        <div class="grid lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
+          <div class="lg:col-span-2">
             <div class="flex items-center gap-3 mb-5">
               <div class="w-10 h-10 rounded-xl bg-white border border-stone-200 flex items-center justify-center overflow-hidden">
                 <img src="/images/patients/Jalilov.jpg" alt="Doctor Jalilov logotipi" class="w-full h-full object-contain p-0.5" />
@@ -199,12 +198,9 @@
                 <span class="block text-[10px] font-medium tracking-widest uppercase text-brand-400">{{ t.footer_trich }}</span>
               </div>
             </div>
-            <p class="text-white/40 text-sm leading-relaxed max-w-sm">{{ t.footer_desc }}</p>
-          </div>
+            <p class="text-white/40 text-sm leading-relaxed max-w-sm mb-6">{{ t.footer_desc }}</p>
 
-          <!-- Links -->
-          <div>
-            <h4 class="text-xs font-semibold tracking-widest uppercase text-white/60 mb-5">{{ t.footer_contacts }}</h4>
+            <h4 class="text-xs font-semibold tracking-widest uppercase text-white/60 mb-4">{{ t.footer_contacts }}</h4>
             <div class="space-y-3 text-sm text-white/40">
               <a :href="`tel:${t.contacts_phone.replace(/\s/g,'')}`" class="flex items-center gap-2.5 hover:text-white hover:translate-x-1 transition-all duration-300">
                 <svg class="w-4 h-4 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
@@ -217,15 +213,38 @@
             </div>
           </div>
 
-          <!-- Working hours -->
+          <div class="lg:col-span-2">
+            <h4 class="text-xs font-semibold tracking-widest uppercase text-white/60 mb-5">{{ t.footer_faq }}</h4>
+            <div class="space-y-2">
+              <div v-for="faq in faqs" :key="faq.id" class="rounded-xl border border-white/10 bg-white/[0.03] overflow-hidden">
+                <button
+                  @click="toggleFaq(faq.id)"
+                  class="w-full px-4 py-3 text-left text-sm font-medium text-white/90 hover:text-white hover:bg-white/5 transition flex items-center justify-between"
+                >
+                  <span>{{ faq.question }}</span>
+                  <svg class="w-4 h-4 text-brand-300 transition-transform" :class="openedFaqId === faq.id ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <div v-if="openedFaqId === faq.id" class="px-4 pb-3 text-sm text-white/60 leading-relaxed space-y-2">
+                  <p v-for="answer in faq.answers" :key="answer.id">{{ answer.text }}</p>
+                </div>
+              </div>
+
+              <div v-if="faqs.length === 0" class="text-sm text-white/35 border border-dashed border-white/10 rounded-xl px-4 py-6">
+                {{ t.footer_faq_empty }}
+              </div>
+            </div>
+          </div>
+
           <div>
             <h4 class="text-xs font-semibold tracking-widest uppercase text-white/60 mb-5">{{ t.contacts_hours_label }}</h4>
             <div class="space-y-3 text-sm text-white/40">
-              <div class="flex justify-between">
+              <div class="flex justify-between gap-3">
                 <span>{{ t.footer_weekdays }}</span>
                 <span class="text-white/60 font-medium">08:00 — 17:00</span>
               </div>
-              <div class="flex justify-between">
+              <div class="flex justify-between gap-3">
                 <span>{{ t.footer_weekends }}</span>
                 <span class="text-white/60 font-medium">{{ t.footer_holiday }}</span>
               </div>
@@ -245,7 +264,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import axios from 'axios'
 import { useLangStore } from '../stores/lang'
 
@@ -256,6 +275,21 @@ const form = ref({ name: '', phone: '', message: '' })
 const sending = ref(false)
 const statusMessage = ref('')
 const statusOk = ref(false)
+const faqs = ref([])
+const openedFaqId = ref(null)
+
+async function loadFaqs() {
+  try {
+    const res = await axios.get('/api/faqs')
+    faqs.value = res.data || []
+  } catch (e) {
+    faqs.value = []
+  }
+}
+
+function toggleFaq(id) {
+  openedFaqId.value = openedFaqId.value === id ? null : id
+}
 
 async function sendMessage() {
   if (!form.value.name || !form.value.phone) return
@@ -280,4 +314,8 @@ async function sendMessage() {
     sending.value = false
   }
 }
+
+onMounted(() => {
+  loadFaqs()
+})
 </script>

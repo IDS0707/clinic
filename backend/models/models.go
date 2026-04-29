@@ -55,8 +55,8 @@ type FAQAnswer struct {
 type SupportThread struct {
 	ID        uint             `gorm:"primaryKey" json:"id"`
 	UserID    uint             `gorm:"uniqueIndex;not null" json:"user_id"`
-	User      User             `json:"user"`
-	Messages  []SupportMessage `gorm:"constraint:OnDelete:CASCADE" json:"messages"`
+	User      User             `gorm:"foreignKey:UserID" json:"user"`
+	Messages  []SupportMessage `gorm:"foreignKey:ThreadID;constraint:OnDelete:CASCADE" json:"messages"`
 	CreatedAt time.Time        `json:"created_at"`
 	UpdatedAt time.Time        `json:"updated_at"`
 }

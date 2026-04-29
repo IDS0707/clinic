@@ -29,7 +29,7 @@ services:
       DB_NAME: clinic
       JWT_SECRET: clinic-jwt-secret-key-2024-change-me
       ADMIN_PHONE: "998914751330"
-      ADMIN_PASSWORD: "12345678"
+      ADMIN_PASSWORD: "123456789"
       TELEGRAM_BOT_TOKEN: "8457926068:AAHfwvTDRdE0yRZW6udncvEPqmOvt5zB1E8"
       TELEGRAM_CHAT_ID: "5234758651"
       PORT: "8080"

@@ -41,7 +41,7 @@
             <!-- Stats row -->
             <div class="grid grid-cols-3 gap-6 mt-14 pt-10 border-t border-white/20 animate-fade-up" style="animation-delay: 0.7s; opacity: 0">
               <div>
-                <div class="text-3xl md:text-4xl font-bold text-white">15<span class="text-brand-300">+</span></div>
+                <div class="text-3xl md:text-4xl font-bold text-white">40<span class="text-brand-300">+</span></div>
                 <div class="text-sm text-blue-200 mt-1">{{ t.hero_years }}</div>
               </div>
               <div>
@@ -49,7 +49,7 @@
                 <div class="text-sm text-blue-200 mt-1">{{ t.hero_patients }}</div>
               </div>
               <div>
-                <div class="text-3xl md:text-4xl font-bold text-white">98<span class="text-brand-300">%</span></div>
+                <div class="text-3xl md:text-4xl font-bold text-white">150.000<span class="text-brand-300">%</span></div>
                 <div class="text-sm text-blue-200 mt-1">{{ t.hero_effect }}</div>
               </div>
             </div>

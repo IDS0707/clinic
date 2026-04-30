@@ -31,7 +31,7 @@
           </div>
 
           <div class="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-white rounded-2xl shadow-xl shadow-stone-900/10 p-4 border border-stone-100 hover:shadow-2xl hover:-translate-y-1 transition-all duration-500">
-            <div class="text-2xl font-serif text-brand-700">10+</div>
+            <div class="text-2xl font-serif text-brand-700">40</div>
             <div class="text-xs font-medium text-stone-500 mt-0.5">{{ t.hero_years }}</div>
           </div>
         </div>

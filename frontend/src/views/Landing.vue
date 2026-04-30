@@ -39,18 +39,14 @@
             </div>
 
             <!-- Stats row -->
-            <div class="grid grid-cols-3 gap-6 mt-14 pt-10 border-t border-white/20 animate-fade-up" style="animation-delay: 0.7s; opacity: 0">
+            <div class="grid grid-cols-2 gap-6 mt-14 pt-10 border-t border-white/20 animate-fade-up" style="animation-delay: 0.7s; opacity: 0">
               <div>
                 <div class="text-3xl md:text-4xl font-bold text-white">40<span class="text-brand-300">+</span></div>
                 <div class="text-sm text-blue-200 mt-1">{{ t.hero_years }}</div>
               </div>
               <div>
-                <div class="text-3xl md:text-4xl font-bold text-white">5000<span class="text-brand-300">+</span></div>
+                <div class="text-3xl md:text-4xl font-bold text-white">150000</div>
                 <div class="text-sm text-blue-200 mt-1">{{ t.hero_patients }}</div>
-              </div>
-              <div>
-                <div class="text-3xl md:text-4xl font-bold text-white">150.000<span class="text-brand-300">%</span></div>
-                <div class="text-sm text-blue-200 mt-1">{{ t.hero_effect }}</div>
               </div>
             </div>
           </div>
@@ -66,11 +62,6 @@
                 class="relative z-20 rounded-2xl w-full object-cover object-top shadow-2xl shadow-brand-900/40 scale-110"
                 style="max-height: 550px;"
               />
-              <!-- Badge -->
-              <div class="absolute -bottom-5 -right-5 bg-white rounded-2xl shadow-2xl p-4 border border-brand-100 z-30">
-                <div class="text-2xl font-bold text-brand-700">150 000<span class="text-brand-500">+</span></div>
-                <div class="text-xs font-medium text-stone-500 mt-0.5">{{ t.hero_patients }}</div>
-              </div>
             </div>
           </div>
         </div>

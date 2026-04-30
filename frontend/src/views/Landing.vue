@@ -68,7 +68,7 @@
               />
               <!-- Badge -->
               <div class="absolute -bottom-5 -right-5 bg-white rounded-2xl shadow-2xl p-4 border border-brand-100 z-30">
-                <div class="text-2xl font-bold text-brand-700">1500<span class="text-brand-500">+</span></div>
+                <div class="text-2xl font-bold text-brand-700">150 000<span class="text-brand-500">+</span></div>
                 <div class="text-xs font-medium text-stone-500 mt-0.5">{{ t.hero_patients }}</div>
               </div>
             </div>
